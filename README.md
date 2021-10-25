@@ -1,4 +1,4 @@
-# QIWI Kassa API SP Go client
+# QIWI Kassa API Go library client
 
 [![GitHub Actions](https://github.com/sendtips/qiwi/workflows/Go/badge.svg)](https://github.com/sendtips/qiwi/actions?workflow=Go)
 [![GoDoc](https://godoc.org/github.com/sendtips/qiwi?status.svg)](https://godoc.org/github.com/sendtips/qiwi)
@@ -8,7 +8,7 @@
 [![sendtips](https://img.shields.io/badge/🍩_Sendtips-@awsom82-black?labelColor=3298dc)](https://sendtips.ru/pay/E2ZfzjVE)
 
 
-A Go library to work with [qiwi](https://developer.qiwi.com/en/).
+A Go library to work with [QIWI Kassa API](https://developer.qiwi.com/en/).
 
 ## Install
 Install by import `github.com/sendtips/qiwi` or via `go get github.com/sendtips/qiwi`
