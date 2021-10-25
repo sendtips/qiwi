@@ -1,4 +1,4 @@
-# QIWI Kassa API Go library client
+# QIWI Kassa API Go client library
 
 [![GitHub Actions](https://github.com/sendtips/qiwi/workflows/Go/badge.svg)](https://github.com/sendtips/qiwi/actions?workflow=Go)
 [![GoDoc](https://godoc.org/github.com/sendtips/qiwi?status.svg)](https://godoc.org/github.com/sendtips/qiwi)
@@ -19,7 +19,7 @@ The library support `go1.14` and newer.
 Run tests using `go test -v .`
 
 ## Example
-To obtain a web payment session you need to create a new qiwi object via `qiwi.New()` and call its `CardRequest()` method.
+To obtain a payment session on QIWI website you need to create a new qiwi object via `qiwi.New()` and call its `CardRequest()` method.
 
 ```go
 package main
@@ -39,6 +39,6 @@ func main() {
         fmt.Printf("Error occurred: %v", err)
     }
 
-    fmt.Printf("%s", pay.PayURL) // Payment session url on QIWI site
+    fmt.Printf("%s", pay.PayURL) // Payment session url on QIWI website
 }
 ```
