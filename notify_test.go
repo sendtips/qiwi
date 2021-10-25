@@ -1,82 +1,89 @@
 package qiwi
 
-// import (
-//     "errors"
-//     "os"
-//     "strconv"
-//     "testing"
-// )
-//
-// func TestHook(t *testing.T) {
-//
-//     tests := []struct {
-//         payload string
-//         want    *Notify
-//         err     error
-//         sig     string
-//     }{
-//         {`Amount=1&AuthCode=777777&CardNumber=411111xxxxxx1112&CardUId=1bM8q4ZaJsrW4RyHLp5MunINfzZ&ErrCode=&MerchantContract=SendtipsTestTerminal&MerchantOrderId=1bM8q9QvSVt54NtIhS9JFtxaH10&Notification=AddCard&OriginalOrderId=CardAdd4&RRN=123456789&State=Voided&Success=true`,
-//             &Notify{Type: "AddCard", Amount: 1, CardUID: "1bM8q4ZaJsrW4RyHLp5MunINfzZ", CardNumber: "411111xxxxxx1112"}, nil, ""},
-//
-//         {`Amount=20000&AuthCode=777777&CardNumber=411111xxxxxx1112&CardUId=&ErrCode=&MerchantContract=SendtipsTestTerminal&MerchantOrderId=1bM8SIqrl1t8breAOXC1lnykhA4&Notification=Block&OriginalOrderId=TipNo3&RRN=123456789&State=Charged&Success=true`,
-//             &Notify{Type: "Block", Amount: 20000, CardNumber: "411111xxxxxx1112"}, nil, ""},
-//
-//         // Bad amount
-//         {`Amount=z&AuthCode=777777&CardNumber=411111xxxxxx1112&CardUId=&ErrCode=&MerchantContract=SendtipsTestTerminal&MerchantOrderId=1bM8SIqrl1t8breAOXC1lnykhA4&Notification=Block&OriginalOrderId=TipNo3&RRN=123456789&State=Charged&Success=true`,
-//             &Notify{Type: "Block", Amount: 0, CardNumber: "411111xxxxxx1112"}, nil, ""},
-//
-//         // Bad success
-//         {`Amount=2000&AuthCode=777777&CardNumber=411111xxxxxx1112&CardUId=&ErrCode=&MerchantContract=SendtipsTestTerminal&MerchantOrderId=1bM8SIqrl1t8breAOXC1lnykhA4&Notification=Block&OriginalOrderId=TipNo3&RRN=123456789&State=Charged&Success=-1`,
-//             &Notify{Type: "Block", Amount: 2000, CardNumber: "411111xxxxxx1112"}, strconv.ErrSyntax, ""},
-//
-//         // Bad fee
-//         {`FeePercent=z&Amount=2000&AuthCode=777777&CardNumber=411111xxxxxx1112&CardUId=&ErrCode=&MerchantContract=SendtipsTestTerminal&MerchantOrderId=1bM8SIqrl1t8breAOXC1lnykhA4&Notification=Block&OriginalOrderId=TipNo3&RRN=123456789&State=Charged&Success=true`,
-//             &Notify{Type: "Block", Amount: 2000, FeePercent: 0, CardNumber: "411111xxxxxx1112"}, nil, ""},
-//         // Good fee
-//         {`FeePercent=1&Amount=2000&AuthCode=777777&CardNumber=411111xxxxxx1112&CardUId=&ErrCode=&MerchantContract=SendtipsTestTerminal&MerchantOrderId=1bM8SIqrl1t8breAOXC1lnykhA4&Notification=Block&OriginalOrderId=TipNo3&RRN=123456789&State=Charged&Success=true`,
-//             &Notify{Type: "Block", Amount: 2000, FeePercent: 1, CardNumber: "411111xxxxxx1112"}, nil, ""},
-//
-//         // Bad terminal is
-//         {`TerminalID=a&Amount=3000&AuthCode=777777&CardNumber=411111xxxxxx1112&CardUId=&ErrCode=&MerchantContract=SendtipsTestTerminal&MerchantOrderId=1bM8SIqrl1t8breAOXC1lnykhA4&Notification=Block&OriginalOrderId=TipNo3&RRN=123456789&State=Charged&Success=true`,
-//             &Notify{Type: "Block", Amount: 3000, CardNumber: "411111xxxxxx1112"}, strconv.ErrSyntax, "ssx"},
-//
-//         // Bad signature
-//         {`Amount=2000&AuthCode=777777&CardNumber=411111xxxxxx1112&CardUId=&ErrCode=&MerchantContract=SendtipsTestTerminal&MerchantOrderId=1bM8SIqrl1t8breAOXC1lnykhA4&Signature=BadSignature&Notification=Block&OriginalOrderId=TipNo3&RRN=123456789&State=Charged&Success=true`,
-//             &Notify{Type: "Block", Amount: 2000, CardNumber: "411111xxxxxx1112"}, ErrBadSignature, os.Getenv("THEMAPSIGNKEY")},
-//     }
-//
-//     for _, test := range tests {
-//
-//         notify, err := NewNotify(test.payload, test.sig)
-//
-//         if !errors.Is(err, test.err) {
-//             t.Error("Error occurred: ", err, test.err)
-//         }
-//
-//         // if test.err == strconv.ErrSyntax {
-//         //   if !errors.Is(err, test.err) {
-//         //     t.Error("Error occurred: ", err, test.err)
-//         //   }
-//         // } else if err != test.err {
-//         //   t.Error("Error occurred: ", err, test.err)
-//         // }
-//
-//         if notify.Type != test.want.Type {
-//             t.Error("Incorrect type")
-//         }
-//
-//         if notify.CardUID != test.want.CardUID {
-//             t.Error("CardUID empty")
-//         }
-//
-//         if notify.Amount != test.want.Amount {
-//             t.Error("Amount is wrong")
-//         }
-//
-//         if notify.FeePercent != test.want.FeePercent {
-//             t.Error("FeePercent is wrong")
-//         }
-//
-//     }
-//
-// }
+import (
+	"errors"
+	"testing"
+)
+
+func TestHook(t *testing.T) {
+
+	const key = "TOKEN"
+
+	payload := []byte(`
+        {
+           "payment":{
+              "paymentid":"4504751",
+              "tokendata":{
+                 "paymenttoken":"4cc975be-483f-8d29-2b7de3e60c2f",
+                 "expireddate":"2021-12-31T00:00:00+03:00"
+              },
+              "type":"payment",
+              "createddatetime":"2019-10-08T11:31:37+03:00",
+              "status":{
+                 "value":"success",
+                 "changeddatetime":"2019-10-08T11:31:37+03:00"
+              },
+              "amount":{
+                 "value":2211.24,
+                 "currency":"RUB"
+              },
+              "paymentMethod":{
+                 "type":"CARD",
+                 "maskedPan":"220024/*/*/*/*/*/*5036",
+                 "rrn":null,
+                 "authCode":null,
+                 "type":"CARD"
+              },
+              "paymentCardInfo": {
+                 "issuingCountry": "810",
+                 "issuingBank": "QiwiBank",
+                 "paymentSystem": "VISA",
+                 "fundingSource": "CREDIT",
+                 "paymentSystemProduct": "P|Visa Gold"
+              },
+              "customer":{
+                 "ip":"79.142.20.248",
+                 "account":"token32",
+                 "phone":"0"
+              },
+              "billId":"testing122",
+              "customFields":{},
+              "flags":[
+                 "SALE"
+              ]
+           },
+           "type":"PAYMENT",
+           "version":"1"
+        }
+        `)
+
+	tests := []struct {
+		payload []byte
+		want    *Notify
+		err     error
+		sig     string
+	}{
+		{
+			payload,
+			&Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}}, nil, ""},
+	}
+
+	for _, test := range tests {
+
+		notify, err := NewNotify(key, test.sig, test.payload)
+
+		if !errors.Is(err, test.err) {
+			t.Error("Error occurred: ", err, test.err)
+		}
+
+		if notify.Type != test.want.Type {
+			t.Error("Incorrect type")
+		}
+
+		if notify.Payment.Amount.Value != test.want.Payment.Amount.Value {
+			t.Error("Amount is wrong")
+		}
+
+	}
+
+}

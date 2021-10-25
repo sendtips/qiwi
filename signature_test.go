@@ -1,8 +1,8 @@
 package qiwi
 
 import (
-	"testing"
 	"encoding/json"
+	"testing"
 )
 
 func TestSignature(t *testing.T) {
