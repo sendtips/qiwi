@@ -20,7 +20,7 @@ func TestBase64Decode(t *testing.T) {
 	}
 
 	if err != nil {
-		t.Errorf("Error ocurred: %s", err)
+		t.Errorf("Error occurred: %s", err)
 	}
 }
 

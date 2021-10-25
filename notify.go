@@ -2,6 +2,7 @@ package qiwi
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 type NotifyType string
@@ -29,7 +30,7 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 
 	err = json.Unmarshal(payload, &notify)
 	if err != nil {
-		return notify, err
+		return notify, fmt.Errorf("[QIWI] Notify: %w (%s)", ErrBadJSON, err)
 	}
 
 	// Check signature

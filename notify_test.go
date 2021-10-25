@@ -65,7 +65,13 @@ func TestHook(t *testing.T) {
 	}{
 		{
 			payload,
-			&Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}}, nil, ""},
+			&Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}},
+			nil, "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f"},
+
+		{
+			[]byte(`{{{bad json}`),
+			&Notify{},
+			ErrBadJSON, ""},
 	}
 
 	for _, test := range tests {

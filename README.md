@@ -8,7 +8,7 @@
 [![sendtips](https://img.shields.io/badge/🍩_Sendtips-@awsom82-black?labelColor=3298dc)](https://sendtips.ru/pay/E2ZfzjVE)
 
 
-A Go library to work with [QIWI API](https://developer.qiwi.com/en/).
+A Go client library to work with [QIWI API](https://developer.qiwi.com/en/).
 
 ## Install
 Install by import `github.com/sendtips/qiwi` or via `go get github.com/sendtips/qiwi`
