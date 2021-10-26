@@ -1,9 +1,13 @@
 package qiwi
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -57,6 +61,50 @@ func TestApplePay(t *testing.T) {
 	err := pay.ApplePay(context.TODO(), amount, payload)
 	if err != nil {
 		t.Errorf("ApplePay method error: %s", err)
+	}
+
+}
+
+func TestApplePayBadToken(t *testing.T) {
+
+	apple_token_mailformed := []byte(`{
+	  {{bad json
+	}`)
+
+	payload := base64.StdEncoding.EncodeToString(apple_token_mailformed)
+
+	// HTTP MOCK
+	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var buf bytes.Buffer
+		var pl Payment
+
+		io.Copy(&buf, r.Body)
+
+		err := json.Unmarshal(buf.Bytes(), &pl)
+		if err != nil {
+			err = fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
+			fmt.Fprintln(w, `{
+				  "serviceName" : "payin-core",
+				  "errorCode" : "validation.json",
+				  "description" : "`+err.Error()+`",
+				  "userMessage" : "Validation error",
+				  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+				  "traceId" : "fd0e2a08c63ace83"
+				}`)
+			return
+		}
+
+		fmt.Fprintln(w, "{}")
+	}))
+	serv.Start()
+	defer serv.Close()
+
+	// Route request to mocked http server
+	pay := New("billId", "SiteID", "TOKEN", serv.URL)
+	amount := 500 // 5.00RUB
+	err := pay.ApplePay(context.TODO(), amount, payload)
+	if !errors.Is(err, ErrBadJSON) {
+		t.Errorf("ApplePay bad token json wrong error: %s", err)
 	}
 
 }
