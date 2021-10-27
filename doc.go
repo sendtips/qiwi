@@ -1,6 +1,6 @@
 /*
 Package qiwi implements QIWI API
-As a client library.
+as a client library.
 
 Example to process ApplePay payment
 
