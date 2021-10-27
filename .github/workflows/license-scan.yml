@@ -8,34 +8,13 @@ on:
       - master
 
 jobs:
-
   build:
-    name: Build
     runs-on: ubuntu-latest
-    steps:
-
-    - name: Set up Go 1.14
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.14
-      id: go
-
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v1
-
-    - name: Get dependencies
-      run: |
-        go get -v -t -d ./...
-        if [ -f Gopkg.toml ]; then
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-            dep ensure
-        fi
     
-    # FOSSA LICENSE SCAN
-    - name: Add GOPATH to GITHUB_ENV
-      run: echo "GOPATH=$(go env GOPATH)" >>"$GITHUB_ENV"
-    - name: Add GOPATH to GITHUB_PATH
-      run: echo "$GOPATH/bin" >>"$GITHUB_PATH"
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
     - name: Run FOSSA scan and upload build data
       uses: fossa-contrib/fossa-action@v1
       with:
