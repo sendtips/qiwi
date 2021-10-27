@@ -9,7 +9,7 @@ import (
 // expirationTime set session expiration time for card payment
 const expirationTime time.Duration = 5 * time.Minute
 
-// 3D Secure status
+// T3DSStatus 3D Secure status
 type T3DSStatus string
 
 const (
@@ -17,7 +17,7 @@ const (
 	Ok3DS T3DSStatus = "PASSED"
 	// Fail3DS 3-D Secure not passed)
 	Fail3DS T3DSStatus = "NOT_PASSED"
-	// T3DSStatus 3-D Secure not required
+	// None3DS 3-D Secure not required
 	None3DS T3DSStatus = "WITHOUT"
 )
 
