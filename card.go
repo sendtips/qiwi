@@ -53,15 +53,15 @@ type CardToken struct {
 func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) (err error) {
 
 	// Moscow time
-	moscow_timezone, err := time.LoadLocation("Europe/Moscow")
+	moscowTimezone, err := time.LoadLocation("Europe/Moscow")
 	if err != nil {
 		return err
 	}
-	moscow_now := time.Now().In(moscow_timezone)
+	moscowNow := time.Now().In(moscowTimezone)
 
 	p.PublicKey = pubKey
 	p.Amount = NewAmountInRubles(amount)
-	p.Expiration = QIWITime{Time: moscow_now.Add(expirationTime)}
+	p.Expiration = QIWITime{Time: moscowNow.Add(expirationTime)}
 
 	// Make request link
 	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.SiteID, p.PaymentID)
