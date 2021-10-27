@@ -253,3 +253,34 @@ func TestSignature(t *testing.T) {
 	}
 
 }
+
+func TestBadSignature(t *testing.T) {
+	var notify Notify
+
+	payload := []byte(`
+        {
+           "checkPaymentMethod":{
+              "requestUid":"4504751",
+              "isValidCard": true,
+              "checkOperationDate":"2019-10-08T11:31:37+03:00",
+              "status":{
+                 "value":"success",
+                 "changeddatetime":"2019-10-08T11:31:37+03:00"
+              }
+           },
+           "type":"CHECK_CARD",
+           "version":"1"
+        }
+    `)
+
+	sig := NewSignature("TOKEN", "BADSIGN")
+
+	err := json.Unmarshal(payload, &notify)
+	if err != nil {
+		t.Errorf("Signature payload JSON unmarshaling error: %s", err)
+	}
+
+	if sig.Verify(notify) {
+		t.Errorf("Bad signature shoud not pass")
+	}
+}

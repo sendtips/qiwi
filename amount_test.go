@@ -68,6 +68,7 @@ func TestJSONUnmarshalAmount(t *testing.T) {
 		{100, nil, `{"value":1.00,"currency":"RUB"}`},
 		{10101, nil, `{"value":101.01,"currency":"RUB"}`},
 		{10000, nil, `{"value":100.00,"currency":"RUB"}`},
+		{12000, nil, `{"value":"120.00","currency":"RUB"}`},
 		{0, nil, `{"value":0.00,"currency":"RUB"}`},
 		{0, nil, `{"value":-0.00,"currency":"RUB"}`},
 		{-100, nil, `{"value":-1.00,"currency":"RUB"}`},

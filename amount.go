@@ -39,7 +39,7 @@ func (m money) MarshalJSON() ([]byte, error) {
 }
 
 func (m *money) UnmarshalJSON(data []byte) error {
-	const doublequotesign byte = 32 // "
+	const doublequotesign byte = 34 // "
 	if data[0] == doublequotesign {
 		data = data[1 : len(data)-1]
 	}
