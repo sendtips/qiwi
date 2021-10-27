@@ -10,11 +10,11 @@ type PaymentType string
 
 const (
 	// CardPayment for card payments
-	CardPayment      = "CARD"
+	CardPayment = "CARD"
 	// TokenPayment for shadowed card numbers payment
-	TokenPayment     = "TOKEN"
+	TokenPayment = "TOKEN"
 	// ApplePayPayment ApplePay payment
-	ApplePayPayment  = "APPLE_PAY_TOKEN"
+	ApplePayPayment = "APPLE_PAY_TOKEN"
 	// GooglePayPayment GooglePay payment
 	GooglePayPayment = "GOOGLE_PAY_TOKEN"
 )
@@ -90,7 +90,8 @@ type PaymentMethod struct {
 	//Payment data from Apple Pay or Google Pay.
 
 }
-// T3DS 3D-Secure 
+
+// T3DS 3D-Secure
 type T3DS struct {
 	Type string `json:"type"`
 	//require
@@ -125,7 +126,7 @@ type Reply struct {
 	Status Status `json:"status,omitempty"`
 }
 
-// Status of request 
+// Status of request
 type Status struct {
 	Value  string `json:"value,omitempty"`
 	Date   string `json:"changedDateTime,omitempty"`

@@ -1,6 +1,3 @@
-// QIWI uses different time format
-// for that we implement custom time parsers for JSON
-// example: 2021-07-29T16:30:00+03:00
 package qiwi
 
 import (
@@ -25,6 +22,7 @@ func (qt *QIWITime) UnmarshalJSON(b []byte) (err error) {
 	}
 	return err
 }
+
 // MarshalJSON packs time.Time to QIWI datetime format
 func (qt QIWITime) MarshalJSON() ([]byte, error) {
 	// if qt.IsZero() {
