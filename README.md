@@ -6,6 +6,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/sendtips/qiwi)](https://goreportcard.com/report/github.com/sendtips/qiwi)
 [![Sourcegraph](https://sourcegraph.com/github.com/sendtips/qiwi/-/badge.svg)](https://sourcegraph.com/github.com/sendtips/qiwi?badge)
 [![sendtips](https://img.shields.io/badge/🍩_Sendtips-@awsom82-black?labelColor=3298dc)](https://sendtips.ru/pay/E2ZfzjVE)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsendtips%2Fqiwi.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsendtips%2Fqiwi?ref=badge_shield)
 
 
 A Go client library to work with [QIWI API](https://developer.qiwi.com/en/).
@@ -45,3 +46,7 @@ func main() {
     fmt.Printf("%s", pay.PayURL) // Payment session url on QIWI website
 }
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsendtips%2Fqiwi.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsendtips%2Fqiwi?ref=badge_large)
