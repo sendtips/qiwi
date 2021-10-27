@@ -8,9 +8,9 @@ import (
 type currency string
 
 const (
-	RUB currency = "RUB"
-	USD currency = "USD"
-	EUR currency = "EUR"
+	rub currency = "RUB"
+	usd currency = "USD"
+	eur currency = "EUR"
 	//GBP Currency = "GBP"
 )
 
@@ -53,6 +53,7 @@ func (m *money) UnmarshalJSON(data []byte) error {
 	return err
 }
 
+// Amount carry money amount and currency ISO 3-ALPHA code
 type Amount struct {
 	Value    money    `json:"value"`
 	Currency currency `json:"currency"`
@@ -64,15 +65,15 @@ func newAmount(a int, cur currency) Amount {
 
 // NewAmountInRubles make sets rubles amount
 func NewAmountInRubles(a int) Amount {
-	return newAmount(a, RUB)
+	return newAmount(a, rub)
 }
 
 // NewAmountInDollars make sets dollars amount
 func NewAmountInDollars(a int) Amount {
-	return newAmount(a, USD)
+	return newAmount(a, usd)
 }
 
 // NewAmountInEuros make sets euros amount
 func NewAmountInEuros(a int) Amount {
-	return newAmount(a, EUR)
+	return newAmount(a, eur)
 }

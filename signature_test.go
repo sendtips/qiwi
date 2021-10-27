@@ -17,7 +17,7 @@ func TestSignature(t *testing.T) {
 
 	// TEST PAYLOADS
 	// TEST PAYLOADS
-	payload_payment := []byte(`
+	payloadPayment := []byte(`
     {
        "payment":{
           "paymentid":"4504751",
@@ -65,7 +65,7 @@ func TestSignature(t *testing.T) {
     }
     `)
 
-	payload_capture := []byte(`
+	payloadCapture := []byte(`
         {
            "capture":{
               "captureId":"4504758",
@@ -113,7 +113,7 @@ func TestSignature(t *testing.T) {
         }
         `)
 
-	payload_refund := []byte(`
+	payloadRefund := []byte(`
     {
        "refund":{
           "refundId":"4504759",
@@ -161,7 +161,7 @@ func TestSignature(t *testing.T) {
     }
     `)
 
-	payload_checkcard := []byte(`
+	payloadCheckCard := []byte(`
     {
        "checkPaymentMethod":{
           "requestUid":"4504751",
@@ -177,7 +177,7 @@ func TestSignature(t *testing.T) {
     }
     `)
 
-	payload_badtype := []byte(`
+	payloadBADType := []byte(`
     {
        "payment":{
           "paymentid":"4504750",
@@ -230,11 +230,11 @@ func TestSignature(t *testing.T) {
 		key, hash string
 		payload   []byte
 	}{
-		{"TOKEN", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f", payload_payment},
-		{"TOKEN", "0b0b2140e0614ded05feefdb448fb77d29c4616591f036f2a7491e7799935eda", payload_capture},
-		{"TOKEN", "4c445af0c065bfc531866cd21f2b93d67f62820cef74341efed506da717a4424", payload_refund},
-		{"TOKEN", "747d49a7bb98c75249659822e3d43912225ac9a75bdddf7bc967af7439d87cfd", payload_checkcard},
-		{"TOKEN", "0a7d5b657b61bfac18f350d57408b79fca88eb0fd6db644dc9e4c436c3f0d056", payload_badtype},
+		{"TOKEN", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f", payloadPayment},
+		{"TOKEN", "0b0b2140e0614ded05feefdb448fb77d29c4616591f036f2a7491e7799935eda", payloadCapture},
+		{"TOKEN", "4c445af0c065bfc531866cd21f2b93d67f62820cef74341efed506da717a4424", payloadRefund},
+		{"TOKEN", "747d49a7bb98c75249659822e3d43912225ac9a75bdddf7bc967af7439d87cfd", payloadCheckCard},
+		{"TOKEN", "0a7d5b657b61bfac18f350d57408b79fca88eb0fd6db644dc9e4c436c3f0d056", payloadBADType},
 	}
 
 	for _, test := range tests {

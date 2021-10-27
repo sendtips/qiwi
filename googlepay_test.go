@@ -38,7 +38,7 @@ func TestGooglePay(t *testing.T) {
 		ProtoVer string `json:"protocolVersion"`
 	}
 
-	google_pay_token := []byte(`{
+	googlePayToken := []byte(`{
 		  "protocolVersion":"ECv2",
 		  "signature":"MEQCIH6Q4OwQ0jAceFEkGF0JID6sJNXxOEi4r+mA7biRxqBQAiAondqoUpU/bdsrAOpZIsrHQS9nwiiNwOrr24RyPeHA0Q\u003d\u003d",
 		  "intermediateSigningKey":{
@@ -154,7 +154,7 @@ func TestGooglePay(t *testing.T) {
 	// Route request to mocked http server
 	pay := New("billId", "SiteID", "TOKEN", serv.URL)
 	amount := 500 // 5.00RUB
-	err := pay.GooglePay(context.TODO(), amount, google_pay_token)
+	err := pay.GooglePay(context.TODO(), amount, googlePayToken)
 	if err != nil {
 		t.Errorf("GooglePay method error: %s", err)
 	}

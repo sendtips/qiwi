@@ -16,6 +16,7 @@ type QIWITime struct {
 const qiwidate = "2006-01-02T15:04:05"
 const qiwitime = "2006-01-02T15:04:05+07:00"
 
+// UnmarshalJSON unpacks QIWI datetime format in go time.Time
 func (qt *QIWITime) UnmarshalJSON(b []byte) (err error) {
 	s := string(b[1 : len(b)-1])
 	qt.Time, err = time.Parse(time.RFC3339, s)
@@ -24,7 +25,7 @@ func (qt *QIWITime) UnmarshalJSON(b []byte) (err error) {
 	}
 	return err
 }
-
+// MarshalJSON packs time.Time to QIWI datetime format
 func (qt QIWITime) MarshalJSON() ([]byte, error) {
 	// if qt.IsZero() {
 	// 	return nil, nil

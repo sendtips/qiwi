@@ -21,7 +21,7 @@ func TestAmount(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		a := newAmount(test.input, RUB)
+		a := newAmount(test.input, rub)
 		if test.want != a.Value {
 			t.Errorf("Wrong amount %0.2f, must be %0.2f", a.Value, test.want)
 		}
@@ -93,21 +93,21 @@ func TestJSONUnmarshalAmount(t *testing.T) {
 
 func TestAmountInRuble(t *testing.T) {
 	a := NewAmountInRubles(100)
-	if a.Currency != RUB {
+	if a.Currency != rub {
 		t.Error("Bad currency value")
 	}
 }
 
 func TestAmountInDollars(t *testing.T) {
 	a := NewAmountInDollars(100)
-	if a.Currency != USD {
+	if a.Currency != usd {
 		t.Error("Bad currency value")
 	}
 }
 
 func TestAmountInEuros(t *testing.T) {
 	a := NewAmountInEuros(100)
-	if a.Currency != EUR {
+	if a.Currency != eur {
 		t.Error("Bad currency value")
 	}
 }
