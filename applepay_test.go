@@ -32,7 +32,7 @@ func TestApplePay(t *testing.T) {
 
 	// "paymentMethod": {
 	// 	  "type": "APPLE_PAY_TOKEN",
-	apple_token_structure := []byte(`{
+	appleTokenStructure := []byte(`{
 	   "paymentData":{
 		  "version":"EC_v1",
 		  "data":"IaD7LKDbJsOrGTlNGkKUC95Y+4an2YuN0swstaCaoovlj8dbgf16FmO5j4AX80L0xsRQYKLUpgUHbGoYF26PbraIdZUDtPtja4HdqDOXGESQGsAKCcRIyujAJpFv95+5xkNldDKK2WTe28lHUDTA9bykIgrvasYaN9VWnS92i2CZPpsI7yu13Kk3PrUceuA3Fb6wFgJ0l7HXL1RGhrA7V5JKReo/EwikMsK8AfChK7pvWaB51SsMvbMJF28JnincfVX39vYHdzEwpjSPngNiszGqZGeLdqNE3ngkoEK1AW2ymbYkIoy9KFdXayekELR6hQWnL4MCutLesLjKhyTN26fxBamPHzAf/IczAdWBDq2P/59jheIGrnK30slJJcr1Bocb8rqojyaVZIY+Xk24Nc6dvSdJhfDDyhX56pn5YtWOxWuVOT0tZSJvxBN/HeIuYcNG6R9u7CHpcelsi4I8O+1gruKKZQHweERG2DyCmoUO9zlajOSm",
@@ -46,7 +46,7 @@ func TestApplePay(t *testing.T) {
 	}`)
 	// }
 
-	payload := base64.StdEncoding.EncodeToString(apple_token_structure)
+	payload := base64.StdEncoding.EncodeToString(appleTokenStructure)
 
 	// HTTP MOCK
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -67,11 +67,11 @@ func TestApplePay(t *testing.T) {
 
 func TestApplePayBadToken(t *testing.T) {
 
-	apple_token_mailformed := []byte(`{
+	appleBADToken := []byte(`{
 	  {{bad json
 	}`)
 
-	payload := base64.StdEncoding.EncodeToString(apple_token_mailformed)
+	payload := base64.StdEncoding.EncodeToString(appleBADToken)
 
 	// HTTP MOCK
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

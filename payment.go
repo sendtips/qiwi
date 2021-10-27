@@ -5,15 +5,21 @@ import (
 	"time"
 )
 
+// PaymentType holds type of payment
 type PaymentType string
 
 const (
+	// CardPayment for card payments
 	CardPayment      = "CARD"
+	// TokenPayment for shadowed card numbers payment
 	TokenPayment     = "TOKEN"
+	// ApplePayPayment ApplePay payment
 	ApplePayPayment  = "APPLE_PAY_TOKEN"
+	// GooglePayPayment GooglePay payment
 	GooglePayPayment = "GOOGLE_PAY_TOKEN"
 )
 
+// Payment main data structure, holds requests and responses on that requests from RSP
 type Payment struct {
 	token         string        `json:"-"`                   // Authtorisation token
 	apiLink       string        `json:"-"`                   // APILink sets payment gateway domain, no trailing slash
@@ -48,6 +54,7 @@ type Payment struct {
 // 	//GooglePayMethod
 // }
 
+// PaymentMethod  holds payment type, card or applepay. googlepay data
 type PaymentMethod struct {
 	Type PaymentType `json:"type"` // Payment method type
 	// "CARD" — payment card
@@ -83,7 +90,7 @@ type PaymentMethod struct {
 	//Payment data from Apple Pay or Google Pay.
 
 }
-
+// T3DS 3D-Secure 
 type T3DS struct {
 	Type string `json:"type"`
 	//require
@@ -106,16 +113,19 @@ type T3DS struct {
 	//ECI indicator. It should be sent if it is received in Apple (Google) payment token. Otherwise, do not send this parameter.
 }
 
+// Customer user related data
 type Customer struct {
 	Account string `json:"account,omitempty"`
 	Email   string `json:"email,omitempty"`
 	Phone   string `json:"phone,omitempty"`
 }
 
+// Reply from RSP
 type Reply struct {
 	Status Status `json:"status,omitempty"`
 }
 
+// Status of request 
 type Status struct {
 	Value  string `json:"value,omitempty"`
 	Date   string `json:"changedDateTime,omitempty"`

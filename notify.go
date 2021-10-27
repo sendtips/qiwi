@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// NotifyType from RSP
 type NotifyType string
 
 const (
@@ -14,6 +15,7 @@ const (
 	CheckCardNotify NotifyType = "CHECK_CARD"
 )
 
+// Notify holds incoming data from RSP
 type Notify struct {
 	Type      NotifyType `json:"type"` // Notification type
 	Payment   Payment    `json:"payment,omitempty"`
