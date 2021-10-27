@@ -9,9 +9,13 @@ import (
 type NotifyType string
 
 const (
-	PaymentNotify   NotifyType = "PAYMENT"
-	CaptureNotify   NotifyType = "CAPTURE"
-	RefundNotify    NotifyType = "REFUND"
+	// PaymentNotify for payment notification
+	PaymentNotify NotifyType = "PAYMENT"
+	// CaptureNotify for capture (2 stage) payments
+	CaptureNotify NotifyType = "CAPTURE"
+	// RefundNotify for refunds
+	RefundNotify NotifyType = "REFUND"
+	// CheckCardNotify for card check requests
 	CheckCardNotify NotifyType = "CHECK_CARD"
 )
 
