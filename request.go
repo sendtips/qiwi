@@ -34,10 +34,7 @@ func init() {
 	client = http.Client{}
 }
 
-// newRequest creates new http request.
-// The params is path is a url part
-// HTTP method, then map[string]string with additional headers
-// and a body of request
+// newRequest creates new http request to RSP
 func newRequest(ctx context.Context, method, link, apiToken string, payload []byte) (*http.Request, error) {
 
 	req, err := http.NewRequestWithContext(ctx, method, link, bytes.NewBuffer(payload))
@@ -60,7 +57,6 @@ func proceedRequest(ctx context.Context, method, path string, p *Payment) error 
 
 	payload, err = json.Marshal(p)
 	if err != nil {
-		//log.Println("[QIWI]", "Cant marshal payload")
 		return fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 	}
 
@@ -80,7 +76,6 @@ func proceedRequest(ctx context.Context, method, path string, p *Payment) error 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		//log.Println("[QIWI]", "Resp code:", resp.StatusCode)
 		return fmt.Errorf("[QIWI] %w: Resp http status code is #%d", ErrBadStatusReply, resp.StatusCode)
 	}
 
@@ -91,8 +86,6 @@ func proceedRequest(ctx context.Context, method, path string, p *Payment) error 
 
 	err = json.Unmarshal(result.Bytes(), &p)
 	if err != nil {
-		//log.Println(result.String(), err)
-		//log.Println("[QIWI]", "Cant unmarshal JSON payload")
 		return fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 	}
 
