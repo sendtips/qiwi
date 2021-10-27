@@ -9,14 +9,19 @@ import (
 // expirationTime set session expiration time for card payment
 const expirationTime time.Duration = 5 * time.Minute
 
+// 3D Secure status
 type T3DSStatus string
 
 const (
-	Ok3DS   T3DSStatus = "PASSED"     // Possible values - PASSED (3-D Secure passed),
-	Fail3DS T3DSStatus = "NOT_PASSED" // NOT_PASSED (3-D Secure not passed),
-	None3DS T3DSStatus = "WITHOUT"    // WITHOUT (3-D Secure not required)
+	// Ok3DS 3-D Secure passed
+	Ok3DS   T3DSStatus = "PASSED"  
+	// Fail3DS 3-D Secure not passed)
+	Fail3DS T3DSStatus = "NOT_PASSED"
+	// T3DSStatus 3-D Secure not required
+	None3DS T3DSStatus = "WITHOUT"
 )
 
+// Card holds data for card payment 
 type Card struct {
 	CheckDate  time.Time  `json:"checkOperationDate"`      // System date of the operation
 	RequestID  string     `json:"requestUid"`              // Card verification operation unique identifier String(200)
@@ -28,6 +33,7 @@ type Card struct {
 	CardToken  CardToken  `json:"createdToken,omitempty"`  // Payment token data
 }
 
+// CardMethod carry card data
 type CardMethod struct {
 	Type       string `json:"type"`           // Payment method type
 	Payment    string `json:"maskedPan"`      // Masked card PAN
@@ -35,6 +41,7 @@ type CardMethod struct {
 	Name       string `json:"cardHolder"`     // Cardholder name
 }
 
+// CardInfo additional information about card 
 type CardInfo struct {
 	Country       string `json:"issuingCountry"`       // Issuer country code	String(3)
 	Bank          string `json:"issuingBank"`          // Issuer name	String
@@ -43,6 +50,7 @@ type CardInfo struct {
 	Product       string `json:"paymentSystemProduct"` // Card's category	String
 }
 
+// CardToken shadowed card 
 type CardToken struct {
 	Token          string    `json:"token"`       // Card payment token	String
 	Name           string    `json:"name"`        // Masked card PAN for which payment token issued	String
@@ -50,6 +58,7 @@ type CardToken struct {
 	Account        string    `json:"account"`     // Customer account for which payment token issued	String
 }
 
+// CardRequest request payment session on RSP site 
 func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) (err error) {
 
 	// Moscow time

@@ -7,11 +7,13 @@ import (
 	"fmt"
 )
 
+// ApplePayToken carry payment token
 type ApplePayToken struct {
 	//	Type        string        `json:"type"`
 	PaymentData ApplePayTokenData `json:"paymentData"`
 }
 
+// ApplePayTokenData encrypted token data structure
 type ApplePayTokenData struct {
 	Version   string   `json:"version"`
 	Data      string   `json:"data"`
@@ -19,6 +21,7 @@ type ApplePayTokenData struct {
 	Signature string   `json:"signature"`
 }
 
+// APHeader internal ApplePayTokenData structure
 type APHeader struct {
 	PubKey        string `json:"ephemeralPublicKey"`
 	PubKeyHash    string `json:"publicKeyHash"`
@@ -32,6 +35,8 @@ func decodeBase64(enc string) ([]byte, error) {
 	return dec, err
 }
 
+// ApplePay executes payment via ApplePay
+// Pass context, amount and ApplePay token string
 func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err error) {
 
 	// Decode token from base64
