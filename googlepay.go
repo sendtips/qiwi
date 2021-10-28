@@ -12,7 +12,7 @@ import (
 func zlibzompress(token []byte) []byte {
 	var b bytes.Buffer
 	w := zlib.NewWriter(&b)
-	w.Write(token)
+	_, _ = w.Write(token)
 	w.Close()
 
 	return b.Bytes()

@@ -42,7 +42,10 @@ func TestCardRequest(t *testing.T) {
 
 	// Route request to mocked http server
 	pay := New("billId", "SiteID", "TOKEN", serv.URL)
-	pay.CardRequest(context.TODO(), "pubKey", 100)
+	err := pay.CardRequest(context.TODO(), "pubKey", 100)
+	if err != nil {
+		t.Errorf("CardRequest error: %s", err)
+	}
 
 	if pay.PayURL != "https://oplata.qiwi.com/form/?invoice_uid=78d60ca9-7c99-481f-8e51-0100c9012087" {
 		t.Error("PayURL not received")
@@ -53,7 +56,7 @@ func TestCardRequest(t *testing.T) {
 func TestLocationTime(t *testing.T) {
 
 	pay := New("billID", "siteID", "token", "")
-	pay.CardRequest(context.TODO(), "pubKey", 100)
+	_ = pay.CardRequest(context.TODO(), "pubKey", 100)
 
 	// Moscow time
 	msktz, _ := time.LoadLocation("Europe/Moscow")

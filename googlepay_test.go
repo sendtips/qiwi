@@ -55,7 +55,18 @@ func TestGooglePay(t *testing.T) {
 		var p Payment
 		var tk GooglePayToken
 
-		io.Copy(&buf, r.Body)
+		_, err = io.Copy(&buf, r.Body)
+		if err != nil {
+			fmt.Fprintln(w, `{
+				  "serviceName" : "payin-core",
+				  "errorCode" : "validation.copyerr",
+				  "description" : "`+err.Error()+`",
+				  "userMessage" : "Validation error",
+				  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+				  "traceId" : "fd0e2a08c63ace83"
+				}`)
+			return
+		}
 
 		err = json.Unmarshal(buf.Bytes(), &p)
 		if err != nil {
@@ -100,7 +111,18 @@ func TestGooglePay(t *testing.T) {
 			return
 		}
 		defer data.Close()
-		io.Copy(&b, data)
+		_, err = io.Copy(&b, data)
+		if err != nil {
+			fmt.Fprintln(w, `{
+				  "serviceName" : "payin-core",
+				  "errorCode" : "validation.copyerr",
+				  "description" : "`+err.Error()+`",
+				  "userMessage" : "Validation error",
+				  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+				  "traceId" : "fd0e2a08c63ace83"
+				}`)
+			return
+		}
 
 		err = json.Unmarshal(b.Bytes(), &tk)
 		if err != nil {
