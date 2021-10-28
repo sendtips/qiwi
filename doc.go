@@ -18,9 +18,9 @@ Example to process ApplePay payment
         fmt.Printf("Error occurred: %v", err)
     }
 
-If an error is a nil, you need to wait for a webhook.
-You should pass hook payload to NewNotify function,
-the Notify object will be returned with payment statusЮ
+You may pass hook payload to NewNotify function,
+or use NotifyParseHTTPRequest which works directly for http.Request
+the Notify object will be returned with the payment status.
 
 QIWI uses ISO8601 time format, unusual in Go
 for that, we implement custom time parsers for JSON
