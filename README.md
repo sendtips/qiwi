@@ -17,7 +17,7 @@ Install by import `github.com/sendtips/qiwi` or via `go get github.com/sendtips/
 The library support `go1.14` and newer.
 
 ## Library status
-Library in early development, we *not recommend use it on production* till it reach v1.
+Library in early development, we *not recommend use it on production* till it reach `v1`.
 
 ## Tests
 Run tests using `go test`
