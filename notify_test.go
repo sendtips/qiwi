@@ -3,8 +3,10 @@ package qiwi
 import (
 	//"bytes"
 	"bytes"
+	"crypto/rand"
 	"errors"
 	"fmt"
+	"math/big"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -153,30 +155,65 @@ func TestHttpRequestHook(t *testing.T) {
                    "version":"1"
                 }`)
 
-	handler := func(w http.ResponseWriter, r *http.Request) {
-		r.Header.Add("Content-Type", "application/json")
-		r.Header.Add("Signature", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f")
-
-		notify, err := NotifyParseHTTPRequest("TOKEN", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f", w, r)
-
-		if err != nil {
-			t.Errorf("Error: %s", err)
-		}
-
-		if notify.Type != PaymentNotify {
-			t.Error("Incorrect type")
-		}
-
-		if notify.Payment.Amount.Currency != rub {
-			t.Error("Currency is wrong")
-		}
-
-		fmt.Fprint(w, "{}")
+	tests := []struct {
+		token, signature string
+		payload          bytes.Buffer
+		err              error
+	}{
+		{"TOKEN", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f", payload, nil},
+		{"TOKEN", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f", genBigBody(), ErrBadJSON},
 	}
 
-	req := httptest.NewRequest("POST", "/qiwinotify", &payload)
-	rec := httptest.NewRecorder()
+	for _, test := range tests {
+		handler := func(w http.ResponseWriter, r *http.Request) {
+			r.Header.Add("Content-Type", "application/json")
+			r.Header.Add("Signature", test.signature)
 
-	handler(rec, req)
+			notify, err := NotifyParseHTTPRequest(test.token, test.signature, w, r)
 
+			if !errors.Is(err, test.err) {
+				t.Errorf("Error: %s", err)
+			}
+
+			if test.err == nil {
+				if notify.Type != PaymentNotify {
+					t.Error("Incorrect type")
+				}
+
+				if notify.Payment.Amount.Currency != rub {
+					t.Error("Currency is wrong")
+				}
+			}
+
+			fmt.Fprint(w, "{}")
+		}
+
+		req := httptest.NewRequest("POST", "/qiwinotify", &test.payload)
+		rec := httptest.NewRecorder()
+
+		handler(rec, req)
+	}
+}
+
+// genBigBody used to emulate endless body request attack
+func genBigBody() bytes.Buffer {
+	var buf bytes.Buffer
+
+	tooBigLength := maxBodyBytes + int64(1)
+	buf.WriteString(`{"payment": "`)
+	for {
+		if len(buf.Bytes()) >= int(tooBigLength) {
+			buf.WriteString(`"}`)
+			return buf
+		}
+		num, err := rand.Int(rand.Reader, big.NewInt(int64(10)))
+		if err != nil {
+			return buf
+		}
+		n := num.Int64()
+		// Put only ints
+		if n > 0 && n < 9 {
+			buf.WriteString(fmt.Sprint(n))
+		}
+	}
 }

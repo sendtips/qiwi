@@ -1,7 +1,7 @@
 package qiwi
 
 import (
-	"bytes"
+	// "bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -59,15 +59,15 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 
 // NotifyParseHTTPRequest parses http request and returns Notify
 func NotifyParseHTTPRequest(signkey, sign string, w http.ResponseWriter, r *http.Request) (Notify, error) {
-	var payload bytes.Buffer
+	//var payload bytes.Buffer
 
 	r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
 
-	_, err := io.Copy(&payload, r.Body)
+	payload, err := io.ReadAll(r.Body)
 	if err != nil {
-		return Notify{}, err
+		return Notify{}, fmt.Errorf("[QIWI] Notify payload http parser: %w: %s", ErrBadJSON, err)
 	}
 
-	return NewNotify(signkey, sign, payload.Bytes())
+	return NewNotify(signkey, sign, payload)
 
 }
