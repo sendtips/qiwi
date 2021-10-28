@@ -12,7 +12,7 @@ and unmarshalling to Notify, the rest will be done by this lib.
 Example to process ApplePay payment
 
     pay := qiwi.New("OrderID", "SiteID", "TOKEN", "http://example.com/qiwi-api")
-    
+
     err := pay.ApplePay(context.TODO(), 300, "ApplePayTokenString") // Request a session for 3.00RUB
     if err != nil {
         fmt.Printf("Error occurred: %v", err)

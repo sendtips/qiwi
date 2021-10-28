@@ -56,10 +56,7 @@ func TestCardRequest(t *testing.T) {
 func TestLocationTime(t *testing.T) {
 
 	pay := New("billID", "siteID", "token", "")
-	err := pay.CardRequest(context.TODO(), "pubKey", 100)
-	if err != nil {
-		t.Errorf("CardRequest error: %s", err)
-	}
+	_ = pay.CardRequest(context.TODO(), "pubKey", 100)
 
 	// Moscow time
 	msktz, _ := time.LoadLocation("Europe/Moscow")
