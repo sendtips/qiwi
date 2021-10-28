@@ -1,9 +1,16 @@
 package qiwi
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 )
+
+// Protects against a malicious client streaming
+// us an endless request body
+const maxBodyBytes = int64(65536) // limit payload to 64kb
 
 // NotifyType from RSP
 type NotifyType string
@@ -48,4 +55,19 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 	}
 
 	return notify, err
+}
+
+// NotifyParseHTTPRequest parses http request and returns Notify
+func NotifyParseHTTPRequest(signkey, sign string, w http.ResponseWriter, r *http.Request) (Notify, error) {
+	var payload bytes.Buffer
+
+	r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
+
+	_, err := io.Copy(&payload, r.Body)
+	if err != nil {
+		return Notify{}, err
+	}
+
+	return NewNotify(signkey, sign, payload.Bytes())
+
 }
