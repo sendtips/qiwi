@@ -77,10 +77,23 @@ func TestApplePayBadToken(t *testing.T) {
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var buf bytes.Buffer
 		var pl Payment
+		var err error
 
-		io.Copy(&buf, r.Body)
+		_, err = io.Copy(&buf, r.Body)
+		if err != nil {
+			err = fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
+			fmt.Fprintln(w, `{
+				  "serviceName" : "payin-core",
+				  "errorCode" : "validation.copyerr",
+				  "description" : "`+err.Error()+`",
+				  "userMessage" : "Validation error",
+				  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+				  "traceId" : "fd0e2a08c63ace83"
+				}`)
+			return
+		}
 
-		err := json.Unmarshal(buf.Bytes(), &pl)
+		err = json.Unmarshal(buf.Bytes(), &pl)
 		if err != nil {
 			err = fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 			fmt.Fprintln(w, `{
