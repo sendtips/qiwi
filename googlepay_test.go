@@ -21,7 +21,10 @@ func Examplezlibzompress() {
 	// }
 
 	data := []byte("Hello world")
-	res := zlibzompress(data)
+	res, err := zlibzompress(data)
+	if err != nil {
+		fmt.Printf("zlib compress error: %s", err)
+	}
 	fmt.Println([]byte(res))
 	// Output: [120 156 242 72 205 201 201 87 40 207 47 202 73 1 4 0 0 255 255 24 171 4 61]
 }
