@@ -1,13 +1,9 @@
 name: Go Linter
-on:
-  push:
-    tags:
-      - v*
-    branches:
-  pull_request:
+on: [push]
 jobs:
-  golangci:
-    name: lint
+  
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
