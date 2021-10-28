@@ -75,7 +75,7 @@ func proceedRequest(ctx context.Context, method, path string, p *Payment) error 
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("[QIWI] %w: Resp http status code is #%d", ErrBadStatusReply, resp.StatusCode)
 	}
 
