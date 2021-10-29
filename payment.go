@@ -2,7 +2,6 @@ package qiwi
 
 import (
 	"fmt"
-	"time"
 )
 
 // PaymentType holds type of payment
@@ -128,19 +127,19 @@ type Reply struct {
 
 // Status of request
 type Status struct {
-	Value  string `json:"value,omitempty"`
-	Date   string `json:"changedDateTime,omitempty"`
-	Reason string `json:"reason,omitempty"`
+	Value  string   `json:"value,omitempty"`
+	Date   QIWITime `json:"changedDateTime,omitempty"`
+	Reason string   `json:"reason,omitempty"`
 }
 
 // QIWIError holds error reply from a carrier
 type QIWIError struct {
-	Service     string    `json:"serviceName"` // Service name produced the error
-	ErrCode     string    `json:"errorCode"`   // Error code
-	Description string    `json:"description"` // Error description for RSP
-	ErrMessage  string    `json:"userMessage"` // Error description for Customer
-	ErrDate     time.Time `json:"dateTime"`    // Error date and time
-	TraceID     string    `json:"traceId"`     // Error Log unique ID
+	Service     string   `json:"serviceName"` // Service name produced the error
+	ErrCode     string   `json:"errorCode"`   // Error code
+	Description string   `json:"description"` // Error description for RSP
+	ErrMessage  string   `json:"userMessage"` // Error description for Customer
+	ErrDate     QIWITime `json:"dateTime"`    // Error date and time
+	TraceID     string   `json:"traceId"`     // Error Log unique ID
 }
 
 // New create card payment session

@@ -57,8 +57,8 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 }
 
 // NotifyParseHTTPRequest parses http request and returns Notify
-// And protects against a malicious client streaming
-// us an endless request body
+// and protects against a malicious client streaming
+// an endless request body
 func NotifyParseHTTPRequest(signkey, sign string, w http.ResponseWriter, r *http.Request) (Notify, error) {
 	var payload bytes.Buffer
 

@@ -6,9 +6,6 @@ Behind this library there are two main structures:
 Payment which carries all our requests and RSP responses
 and Notify which holds inbound requests from RSP.
 
-You should process incoming requests in your own function
-and unmarshalling to Notify, the rest will be done by this lib.
-
 Example to process ApplePay payment
 
     pay := qiwi.New("OrderID", "SiteID", "TOKEN", "http://example.com/qiwi-api")
@@ -22,7 +19,7 @@ You may pass hook payload to NewNotify function,
 or use NotifyParseHTTPRequest which works directly for http.Request
 the Notify object will be returned with the payment status.
 
-QIWI uses ISO8601 time format, unusual in Go
-for that, we implement custom time parsers for JSON
+QIWI uses ISO8601 time format, 
+so we implement a custom time parser
 example: 2021-07-29T16:30:00+03:00 */
 package qiwi
