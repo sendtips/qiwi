@@ -8,9 +8,8 @@ import (
 	"net/http"
 )
 
-// Protects against a malicious client streaming
-// us an endless request body
-const maxBodyBytes = int64(65536) // limit payload to 64kb
+// maxBodyBytes limit inbound payload to 64kb
+const maxBodyBytes = int64(65536)
 
 // NotifyType from RSP
 type NotifyType string
@@ -58,6 +57,8 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 }
 
 // NotifyParseHTTPRequest parses http request and returns Notify
+// And protects against a malicious client streaming
+// us an endless request body
 func NotifyParseHTTPRequest(signkey, sign string, w http.ResponseWriter, r *http.Request) (Notify, error) {
 	var payload bytes.Buffer
 
