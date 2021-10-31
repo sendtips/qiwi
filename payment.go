@@ -125,14 +125,40 @@ type Reply struct {
 	Status Status `json:"status,omitempty"`
 }
 
+type StatusError string
+
+const (
+	StatusInvalidState                StatusError = "INVALID_STATE"                  // Incorrect transaction status
+	StatusInvalidAmount               StatusError = "INVALID_AMOUNT"                 // Incorrect payment amount
+	StatusDeclinedMPI                 StatusError = "DECLINED_BY_MPI"                // Rejected by MPI
+	StatusDeclinedFraud               StatusError = "DECLINED_BY_FRAUD"              // Rejected by fraud monitoring
+	StatusGatawayIntegrationError     StatusError = "GATEWAY_INTEGRATION_ERROR"      // Acquirer integration error
+	StatusGatawayTechnicalError       StatusError = "GATEWAY_TECHNICAL_ERROR"        // Technical error on acquirer side
+	StatusAcquiringMPITechError       StatusError = "ACQUIRING_MPI_TECH_ERROR"       // Technical error on 3DS authentication
+	StatusAcquiringGatawayTechError   StatusError = "ACQUIRING_GATEWAY_TECH_ERROR"   // Technical error
+	StatusAcquiringAcquirerTechError  StatusError = "ACQUIRING_ACQUIRER_ERROR"       // Technical error
+	StatusAcquiringAuthTechnicalError StatusError = "ACQUIRING_AUTH_TECHNICAL_ERROR" // Error on funds authentication
+	StatusAcquiringIssuerNotAvailable StatusError = "ACQUIRING_ISSUER_NOT_AVAILABLE" // Issuer error. Issuer is not available at the moment
+	StatusAcquiringSuspectedFraud     StatusError = "ACQUIRING_SUSPECTED_FRAUD"      // Issuer error. Fraud suspicion
+	StatusAcquiringLimitExceeded      StatusError = "ACQUIRING_LIMIT_EXCEEDED"       // Issuer error. Some limit exceeded
+	StatusAcquiringNotPermitted       StatusError = "ACQUIRING_NOT_PERMITTED"        // Issuer error. Operation not allowed
+	StatusAcquiringIncorrectCVV       StatusError = "ACQUIRING_INCORRECT_CVV"        // Issuer error. Incorrect CVV
+	StatusAcquiringExpiredCard        StatusError = "ACQUIRING_EXPIRED_CARD"         // Issuer error. Incorrect card expiration date
+	StatusAcquiringInvalidCard        StatusError = "ACQUIRING_INVALID_CARD"         // Issuer error. Verify card data
+	StatusAcquiringInsufficientFunds  StatusError = "ACQUIRING_INSUFFICIENT_FUNDS"   // Issuer error. Not enough funds
+	StatusAcquiringUnknown            StatusError = "ACQUIRING_UNKNOWN"              // Unknown error
+	StatusBillAlreadyPaid             StatusError = "BILL_ALREADY_PAID"              // Invoice is already paid
+	StatusPayinProcessingError        StatusError = "PAYIN_PROCESSING_ERROR"         // Payment processing error
+)
+
 // Status of request
 type Status struct {
-	Value        string   `json:"value,omitempty"`
-	Date         QIWITime `json:"changedDateTime,omitempty"`
-	Reason       string   `json:"reason,omitempty"`
-	ReasonNotify string   `json:"reasonCode,omitempty"`
-	Message      string   `json:"reasonMessage,omitempty"`
-	ErrCode      string   `jsob:"errorCode,omitempty"`
+	Value        string      `json:"value,omitempty"`
+	Date         QIWITime    `json:"changedDateTime,omitempty"`
+	Reason       StatusError `json:"reason,omitempty"`
+	ReasonNotify StatusError `json:"reasonCode,omitempty"`
+	Message      string      `json:"reasonMessage,omitempty"`
+	ErrCode      string      `jsob:"errorCode,omitempty"`
 }
 
 // QIWIError holds error reply from a carrier
