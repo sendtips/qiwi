@@ -169,7 +169,7 @@ func TestHttpRequestHook(t *testing.T) {
 			r.Header.Add("Content-Type", "application/json")
 			r.Header.Add("Signature", test.signature)
 
-			notify, err := NotifyParseHTTPRequest(test.token, test.signature, w, r)
+			notify, err := NotifyParseHTTPRequest(test.token, w, r)
 
 			if !errors.Is(err, test.err) {
 				t.Errorf("Error: %s", err)

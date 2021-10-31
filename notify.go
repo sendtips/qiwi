@@ -59,7 +59,7 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 // NotifyParseHTTPRequest parses http request and returns Notify
 // and protects against a malicious client streaming
 // an endless request body
-func NotifyParseHTTPRequest(signkey, sign string, w http.ResponseWriter, r *http.Request) (Notify, error) {
+func NotifyParseHTTPRequest(signkey string, w http.ResponseWriter, r *http.Request) (Notify, error) {
 	var payload bytes.Buffer
 
 	r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
@@ -69,6 +69,6 @@ func NotifyParseHTTPRequest(signkey, sign string, w http.ResponseWriter, r *http
 		return Notify{}, fmt.Errorf("[QIWI] Notify payload http parser: %w: %s", ErrBadJSON, err)
 	}
 
-	return NewNotify(signkey, sign, payload.Bytes())
+	return NewNotify(signkey, r.Header.Get("Signature"), payload.Bytes())
 
 }
