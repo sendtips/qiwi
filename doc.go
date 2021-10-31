@@ -14,7 +14,7 @@ Example to process ApplePay payment
 
     err := pay.ApplePay(context.TODO(), 300, "ApplePayTokenString") // Request a session for 3.00RUB
     if err != nil {
-        fmt.Printf("Error occurred: %v", err)
+        fmt.Printf("Error occurred: %s", err)
     }
 
 You may pass hook payload to NewNotify function,
@@ -24,12 +24,20 @@ the Notify object will be returned with the payment status.
 Example of receiving Notify from incoming http.Request
 
     //..
-    notify, err := qiwi.NotifyParseHTTPRequest("YOUTOKEN", c.Writer, c.Request)
+    notify, err := qiwi.NotifyParseHTTPRequest("YOUTOKEN", w.ResponseWriter, r.Request)
     if err != nil {
-        log.Println("[QIWI] Error while loading incoming notification:", err)
+        fmt.Println("[QIWI] Error while loading incoming notification:", err)
     }
 
-QIWI uses ISO8601 time format,
-so we use a custom time Qiwitime type
-example: 2021-07-29T16:30:00+03:00 */
+Or you may process received data by yourself and pass the payload to NewNotify
+
+    //..
+    notify, err := qiwi.NewNotify("YOUTOKEN", "SIGNATURE", payload)
+    if err != nil {
+        fmt.Println("[QIWI] Error while parsing notification:", err)
+    }
+
+
+QIWI uses ISO8601 (2021-07-29T16:30:00+03:00) time format,
+so use a build-in QIWITime custom time type */
 package qiwi
