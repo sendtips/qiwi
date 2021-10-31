@@ -25,12 +25,12 @@ func (s *Signature) sign() bool {
 	mac.Write(s.Message)
 	expectedMAC := mac.Sum(nil)
 
+	s.Valid = false
 	if hex.EncodeToString(expectedMAC) == s.Hash {
 		s.Valid = true
-		return true
 	}
 
-	return false
+	return s.Valid
 }
 
 // Verify HMAC-SHA256 signature hash used in Notify type
