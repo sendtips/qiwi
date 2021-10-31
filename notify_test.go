@@ -12,6 +12,31 @@ import (
 	"testing"
 )
 
+
+func TestNotifyType(t *testing.T) {
+	
+	tests := []struct{
+		input string
+		want NotifyType
+		wantString string
+	}{
+		{"PAYMENT", PaymentNotify, "PAYMENT"},
+		{"CAPTURE", CaptureNotify, "PAYMENT"},
+		{"REFUND", RefundNotify, "PAYMENT"},
+		{"CHECK_CARD", CheckCardNotify, "CHECK_CARD"},
+	}
+	
+	for _, test := range tests {
+		if NotifyType(test.input) != test.want {
+			t.Errorf("Bad NotifyType %s", test.input)
+		}
+		
+		if test.input != string(test.want) {
+			t.Errorf("Bad string method result for %s", test.input)
+		}
+	}
+}
+
 func TestHook(t *testing.T) {
 
 	const key = "TOKEN"
