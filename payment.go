@@ -125,6 +125,18 @@ type Reply struct {
 	Status Status `json:"status,omitempty"`
 }
 
+// StatusCode operation status reflects its current state
+type StatusCode string
+
+const (
+	StatusCreated   StatusCode = "CREATED"   // For invoices only one status is used
+	StatusWait      StatusCode = "WAITING"   // Awaiting for 3DS authentication API responses)
+	StatusCompleted StatusCode = "COMPLETED" // Request for authentication is successfully processed API responsess
+	StatusOK        StatusCode = "SUCCESS"   // Request for authentication is successfully processed Notifications
+	StatusFail      StatusCode = "DECLINE"   // Request for payment confirmation is rejected Notifications, API responses
+)
+
+// StatusError API errors describe a reason for rejection of the operation
 type StatusError string
 
 const (
@@ -153,7 +165,7 @@ const (
 
 // Status of request
 type Status struct {
-	Value        string      `json:"value,omitempty"`
+	Value        StatusCode  `json:"value,omitempty"`
 	Date         QIWITime    `json:"changedDateTime,omitempty"`
 	Reason       StatusError `json:"reason,omitempty"`
 	ReasonNotify StatusError `json:"reasonCode,omitempty"`
