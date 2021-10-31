@@ -127,9 +127,12 @@ type Reply struct {
 
 // Status of request
 type Status struct {
-	Value  string   `json:"value,omitempty"`
-	Date   QIWITime `json:"changedDateTime,omitempty"`
-	Reason string   `json:"reason,omitempty"`
+	Value        string   `json:"value,omitempty"`
+	Date         QIWITime `json:"changedDateTime,omitempty"`
+	Reason       string   `json:"reason,omitempty"`
+	ReasonNotify string   `json:"reasonCode,omitempty"`
+	Message      string   `json:"reasonMessage,omitempty"`
+	ErrCode      string   `jsob:"errorCode,omitempty"`
 }
 
 // QIWIError holds error reply from a carrier
