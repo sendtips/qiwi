@@ -25,6 +25,10 @@ const (
 	CheckCardNotify NotifyType = "CHECK_CARD"
 )
 
+func (nt NotifyType) String() string {
+	return string(nt)
+}
+
 // Notify holds incoming data from RSP
 type Notify struct {
 	Type      NotifyType `json:"type"` // Notification type
