@@ -1,7 +1,6 @@
 package qiwi
 
 import (
-	//"bytes"
 	"bytes"
 	"crypto/rand"
 	"errors"
@@ -12,26 +11,24 @@ import (
 	"testing"
 )
 
-
 func TestNotifyType(t *testing.T) {
-	
-	tests := []struct{
+
+	tests := []struct {
 		input string
-		want NotifyType
-		wantString string
+		want  NotifyType
 	}{
-		{"PAYMENT", PaymentNotify, "PAYMENT"},
-		{"CAPTURE", CaptureNotify, "PAYMENT"},
-		{"REFUND", RefundNotify, "PAYMENT"},
-		{"CHECK_CARD", CheckCardNotify, "CHECK_CARD"},
+		{"PAYMENT", PaymentNotify},
+		{"CAPTURE", CaptureNotify},
+		{"REFUND", RefundNotify},
+		{"CHECK_CARD", CheckCardNotify},
 	}
-	
+
 	for _, test := range tests {
 		if NotifyType(test.input) != test.want {
 			t.Errorf("Bad NotifyType %s", test.input)
 		}
-		
-		if test.input != string(test.want) {
+
+		if test.input != test.want.String() {
 			t.Errorf("Bad string method result for %s", test.input)
 		}
 	}
