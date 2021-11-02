@@ -28,8 +28,7 @@ type APHeader struct {
 // decodeBase64 return base64 decoded string
 // used internally to "unpack" applepay token
 func decodeBase64(enc string) ([]byte, error) {
-	dec, err := base64.StdEncoding.DecodeString(enc)
-	return dec, err
+	return base64.StdEncoding.DecodeString(enc)
 }
 
 // ApplePay executes payment via ApplePay
