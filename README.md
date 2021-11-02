@@ -38,7 +38,7 @@ import (
 func main() {
     pay := qiwi.New("OrderID", "SiteID", "TOKEN", "http://example.com/qiwi-api")
 
-    err := pay.CardRequest(context.TODO(), "PublicKey", "OrderID", 300) // Request session for 3.00RUB
+    err := pay.CardRequest(context.TODO(), "PublicKey", 300) // Request session for 3.00RUB
     if err != nil {
         fmt.Printf("Error occurred: %s", err)
     }
