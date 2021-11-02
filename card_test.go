@@ -58,7 +58,7 @@ func TestCardRequest(t *testing.T) {
 
 	// Route request to mocked http server
 	pay := New("billId", "SiteID", "TOKEN", serv.URL)
-	err := pay.CardRequest(context.TODO(), "pubKey", "billId", 100)
+	err := pay.CardRequest(context.TODO(), "pubKey", 100)
 
 	if err != nil {
 		t.Errorf("CardRequest error: %s", err)
@@ -77,7 +77,7 @@ func TestCardRequest(t *testing.T) {
 func TestLocationTime(t *testing.T) {
 
 	pay := New("billID", "siteID", "token", "")
-	_ = pay.CardRequest(context.TODO(), "pubKey", "billId", 100)
+	_ = pay.CardRequest(context.TODO(), "pubKey", 100)
 
 	// Moscow time
 	msktz, _ := time.LoadLocation("Europe/Moscow")
