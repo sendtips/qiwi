@@ -9,7 +9,7 @@ import (
 )
 
 // maxBodyBytes limit inbound payload to 64kb
-const maxBodyBytes = int64(65536)
+const maxBodyBytes int64 = 65536
 
 // NotifyType from RSP
 type NotifyType string
@@ -24,10 +24,6 @@ const (
 	// CheckCardNotify for card check requests
 	CheckCardNotify NotifyType = "CHECK_CARD"
 )
-
-func (nt NotifyType) String() string {
-	return string(nt)
-}
 
 // Notify holds incoming data from RSP
 type Notify struct {
@@ -60,8 +56,8 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 	return notify, err
 }
 
-// NotifyParseHTTPRequest parses http request and returns Notify
-// and protects against a malicious client streaming
+// NotifyParseHTTPRequest parses http request which returns Notify
+// and also protects against a malicious client streaming
 // an endless request body
 func NotifyParseHTTPRequest(signkey string, w http.ResponseWriter, r *http.Request) (Notify, error) {
 	var payload bytes.Buffer

@@ -28,7 +28,7 @@ func TestNotifyType(t *testing.T) {
 			t.Errorf("Bad NotifyType %s", test.input)
 		}
 
-		if test.input != test.want.String() {
+		if test.input != string(test.want) {
 			t.Errorf("Bad string method result for %s", test.input)
 		}
 	}
