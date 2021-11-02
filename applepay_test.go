@@ -50,6 +50,19 @@ func TestApplePay(t *testing.T) {
 
 	// HTTP MOCK
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		if r.Method != "PUT" {
+			fmt.Fprintln(w, `{
+				  "serviceName" : "payin-core",
+				  "errorCode" : "validation.wrongmethod",
+				  "description" : "bad http method",
+				  "userMessage" : "Validation error",
+				  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+				  "traceId" : "fd0e2a08c63ace83"
+				}`)
+			return
+		}
+
 		fmt.Fprintln(w, "{}")
 	}))
 	serv.Start()

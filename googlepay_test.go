@@ -55,6 +55,18 @@ func TestGooglePay(t *testing.T) {
 		var p Payment
 		var tk GooglePayToken
 
+		if r.Method != "PUT" {
+			fmt.Fprintln(w, `{
+				  "serviceName" : "payin-core",
+				  "errorCode" : "validation.wrongmethod",
+				  "description" : "bad http method",
+				  "userMessage" : "Validation error",
+				  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+				  "traceId" : "fd0e2a08c63ace83"
+				}`)
+			return
+		}
+
 		_, err = io.Copy(&buf, r.Body)
 		if err != nil {
 			fmt.Fprintln(w, `{
