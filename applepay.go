@@ -7,14 +7,8 @@ import (
 	"fmt"
 )
 
-// ApplePayToken carry payment token
+// ApplePayToken carry ApplePay payment token
 type ApplePayToken struct {
-	//	Type        string        `json:"type"`
-	PaymentData ApplePayTokenData `json:"paymentData"`
-}
-
-// ApplePayTokenData encrypted token data structure
-type ApplePayTokenData struct {
 	Version   string   `json:"version"`
 	Data      string   `json:"data"`
 	Header    APHeader `json:"header"`

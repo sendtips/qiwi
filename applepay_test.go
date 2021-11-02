@@ -29,11 +29,11 @@ func TestBase64Decode(t *testing.T) {
 }
 
 func TestApplePay(t *testing.T) {
+	var amount int = 500 // test amount 5.00RUB
 
 	// "paymentMethod": {
 	// 	  "type": "APPLE_PAY_TOKEN",
 	appleTokenStructure := []byte(`{
-	   "paymentData":{
 		  "version":"EC_v1",
 		  "data":"IaD7LKDbJsOrGTlNGkKUC95Y+4an2YuN0swstaCaoovlj8dbgf16FmO5j4AX80L0xsRQYKLUpgUHbGoYF26PbraIdZUDtPtja4HdqDOXGESQGsAKCcRIyujAJpFv95+5xkNldDKK2WTe28lHUDTA9bykIgrvasYaN9VWnS92i2CZPpsI7yu13Kk3PrUceuA3Fb6wFgJ0l7HXL1RGhrA7V5JKReo/EwikMsK8AfChK7pvWaB51SsMvbMJF28JnincfVX39vYHdzEwpjSPngNiszGqZGeLdqNE3ngkoEK1AW2ymbYkIoy9KFdXayekELR6hQWnL4MCutLesLjKhyTN26fxBamPHzAf/IczAdWBDq2P/59jheIGrnK30slJJcr1Bocb8rqojyaVZIY+Xk24Nc6dvSdJhfDDyhX56pn5YtWOxWuVOT0tZSJvxBN/HeIuYcNG6R9u7CHpcelsi4I8O+1gruKKZQHweERG2DyCmoUO9zlajOSm",
 		  "header":{
@@ -42,7 +42,6 @@ func TestApplePay(t *testing.T) {
 			 "transactionId":"1234567890ABCDEF"
 		  },
 		  "signature":"ZmFrZSBzaWduYXR1cmU="
-	   }
 	}`)
 	// }
 
@@ -50,6 +49,9 @@ func TestApplePay(t *testing.T) {
 
 	// HTTP MOCK
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var buf bytes.Buffer
+		var p Payment
+		var err error
 
 		if r.Method != "PUT" {
 			fmt.Fprintln(w, `{
@@ -63,6 +65,44 @@ func TestApplePay(t *testing.T) {
 			return
 		}
 
+		_, err = io.Copy(&buf, r.Body)
+		if err != nil {
+			fmt.Fprintln(w, `{
+				  "serviceName" : "payin-core",
+				  "errorCode" : "validation.copyerr",
+				  "description" : "`+err.Error()+`",
+				  "userMessage" : "Validation error",
+				  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+				  "traceId" : "fd0e2a08c63ace83"
+				}`)
+			return
+		}
+
+		err = json.Unmarshal(buf.Bytes(), &p)
+		if err != nil {
+			fmt.Fprintln(w, `{
+				  "serviceName" : "payin-core",
+				  "errorCode" : "validation.json",
+				  "description" : "`+err.Error()+`",
+				  "userMessage" : "Validation error",
+				  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+				  "traceId" : "fd0e2a08c63ace83"
+				}`)
+			return
+		}
+
+		if p.PaymentMethod.Type != ApplePayPayment {
+			t.Error("Wrong payment type")
+		}
+
+		if p.Amount.Value.Int() != amount {
+			t.Errorf("Wrong test amount %d, but requested %d", p.Amount.Value.Int(), amount)
+		}
+
+		if p.PaymentMethod.ApplePayToken.Version != "EC_v1" {
+			t.Error("Wrong ApplePay payment token payload version")
+		}
+
 		fmt.Fprintln(w, "{}")
 	}))
 	serv.Start()
@@ -70,7 +110,6 @@ func TestApplePay(t *testing.T) {
 
 	// Route request to mocked http server
 	pay := New("billId", "SiteID", "TOKEN", serv.URL)
-	amount := 500 // 5.00RUB
 	err := pay.ApplePay(context.TODO(), amount, payload)
 	if err != nil {
 		t.Errorf("ApplePay method error: %s", err)
