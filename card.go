@@ -35,10 +35,10 @@ type Card struct {
 
 // CardMethod carry card data
 type CardMethod struct {
-	Type       string `json:"type"`           // Payment method type
-	Payment    string `json:"maskedPan"`      // Masked card PAN
-	Expiration string `json:"cardExpireDate"` // Card expiration date (MM/YY)
-	Name       string `json:"cardHolder"`     // Cardholder name
+	Type       PaymentType `json:"type"`           // Payment method type
+	Payment    string      `json:"maskedPan"`      // Masked card PAN
+	Expiration string      `json:"cardExpireDate"` // Card expiration date (MM/YY)
+	Name       string      `json:"cardHolder"`     // Cardholder name
 }
 
 // CardInfo additional information about card
@@ -69,6 +69,7 @@ func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) (e
 	moscowNow := time.Now().In(moscowTimezone)
 
 	p.PublicKey = pubKey
+	p.PaymentMethod.Type = CardPayment
 	p.Amount = NewAmountInRubles(amount)
 	p.Expiration = QIWITime{Time: moscowNow.Add(expirationTime)}
 

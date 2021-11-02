@@ -23,7 +23,7 @@ func (p *Payment) GooglePay(ctx context.Context, amount int, token []byte) error
 	var err error
 
 	p.PaymentMethod.Type = GooglePayPayment
-	p.PaymentMethod.GooglePaymentToken = base64.StdEncoding.EncodeToString(zlibzompress(token))
+	p.PaymentMethod.Token = base64.StdEncoding.EncodeToString(zlibzompress(token))
 	p.Amount = NewAmountInRubles(amount)
 
 	// Make request link

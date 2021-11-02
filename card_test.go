@@ -33,8 +33,24 @@ func TestCardRequest(t *testing.T) {
         "payUrl": "https://oplata.qiwi.com/form/?invoice_uid=78d60ca9-7c99-481f-8e51-0100c9012087"
     }`
 
+	errReply := `
+	{
+		  "serviceName" : "payin-core",
+		  "errorCode" : "validation.wrongmethod",
+		  "description" : "Wrong method",
+		  "userMessage" : "Validation error",
+		  "dateTime" : "2018-11-13T16:49:59.166+03:00",
+		  "traceId" : "fd0e2a08c63ace83"
+		}
+	`
+
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, reply)
+		switch r.Method {
+		case "PUT":
+			fmt.Fprintln(w, reply)
+		default:
+			fmt.Fprint(w, errReply)
+		}
 	}))
 
 	serv.Start()
@@ -43,8 +59,13 @@ func TestCardRequest(t *testing.T) {
 	// Route request to mocked http server
 	pay := New("billId", "SiteID", "TOKEN", serv.URL)
 	err := pay.CardRequest(context.TODO(), "pubKey", 100)
+
 	if err != nil {
 		t.Errorf("CardRequest error: %s", err)
+	}
+
+	if pay.PaymentMethod.Type != CardPayment {
+		t.Errorf("Wrong payment type %s", pay.PaymentMethod.Type)
 	}
 
 	if pay.PayURL != "https://oplata.qiwi.com/form/?invoice_uid=78d60ca9-7c99-481f-8e51-0100c9012087" {

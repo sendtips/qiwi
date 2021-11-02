@@ -84,7 +84,7 @@ func TestGooglePay(t *testing.T) {
 		//
 		// enc := base64.NewDecoder(base64.StdEncoding, )
 		// enc.Read(buf.Bytes())
-		dec, err := base64.StdEncoding.DecodeString(p.PaymentMethod.GooglePaymentToken)
+		dec, err := base64.StdEncoding.DecodeString(p.PaymentMethod.Token)
 		if err != nil {
 			fmt.Fprintln(w, `{
 		  "serviceName" : "payin-core",
@@ -177,6 +177,10 @@ func TestGooglePay(t *testing.T) {
 	pay := New("billId", "SiteID", "TOKEN", serv.URL)
 	amount := 500 // 5.00RUB
 	err := pay.GooglePay(context.TODO(), amount, googlePayToken)
+	if pay.PaymentMethod.Type != GooglePayPayment {
+		t.Errorf("Wrong payment type %s", pay.PaymentMethod.Type)
+	}
+
 	if err != nil {
 		t.Errorf("GooglePay method error: %s", err)
 	}

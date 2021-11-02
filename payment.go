@@ -9,13 +9,13 @@ type PaymentType string
 
 const (
 	// CardPayment for card payments
-	CardPayment = "CARD"
+	CardPayment PaymentType = "CARD"
 	// TokenPayment for shadowed card numbers payment
-	TokenPayment = "TOKEN"
+	TokenPayment PaymentType = "TOKEN"
 	// ApplePayPayment ApplePay payment
-	ApplePayPayment = "APPLE_PAY_TOKEN"
+	ApplePayPayment PaymentType = "APPLE_PAY_TOKEN"
 	// GooglePayPayment GooglePay payment
-	GooglePayPayment = "GOOGLE_PAY_TOKEN"
+	GooglePayPayment PaymentType = "GOOGLE_PAY_TOKEN"
 )
 
 // Payment main data structure, holds requests and responses on that requests from RSP
@@ -77,11 +77,11 @@ type PaymentMethod struct {
 	// string(26)
 	//Customer card holder (Latin letters). For type=CARD only
 
-	Token ApplePayToken `json:"paymentData,omitempty"` // TODO OR paymentData
+	ApplePayToken ApplePayToken `json:"paymentData,omitempty"`
 	//optional
 	//string
 	//Payment token string. For type=TOKEN, APPLE_PAY_TOKEN, GOOGLE_PAY_TOKEN only
-	GooglePaymentToken string `json:"paymentToken,omitempty"`
+	Token string `json:"paymentToken,omitempty"`
 
 	T3DS T3DS `json:"external3dSec,omitempty"`
 	//optional

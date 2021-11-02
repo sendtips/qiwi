@@ -46,7 +46,7 @@ func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err e
 	}
 
 	// Parse JSON data+-
-	err = json.Unmarshal(data, &p.PaymentMethod.Token)
+	err = json.Unmarshal(data, &p.PaymentMethod.ApplePayToken)
 	if err != nil {
 		return fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 	}
