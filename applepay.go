@@ -7,8 +7,9 @@ import (
 	"fmt"
 )
 
-// ApplePayToken carry ApplePay payment token
-type ApplePayToken struct {
+// PKPaymentToken is ApplePay payment token structure
+// see https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
+type PKPaymentToken struct {
 	Version   string   `json:"version"`
 	Data      string   `json:"data"`
 	Header    APHeader `json:"header"`
@@ -17,7 +18,9 @@ type ApplePayToken struct {
 
 // APHeader internal ApplePayTokenData structure
 type APHeader struct {
-	PubKey        string `json:"ephemeralPublicKey"`
+	AppData       string `json:"applicationData,omitempty"`    // optional, HEX-string
+	Key           string `json:"wrappedKey,omitempty"`         // used only for RSA_v1
+	PubKey        string `json:"ephemeralPublicKey,omitempty"` // used only for EC_v1
 	PubKeyHash    string `json:"publicKeyHash"`
 	TransactionID string `json:"transactionId"`
 }

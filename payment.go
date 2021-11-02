@@ -77,7 +77,7 @@ type PaymentMethod struct {
 	// string(26)
 	//Customer card holder (Latin letters). For type=CARD only
 
-	ApplePayToken ApplePayToken `json:"paymentData,omitempty"`
+	ApplePayToken PKPaymentToken `json:"paymentData,omitempty"`
 	//optional
 	//string
 	//Payment token string. For type=TOKEN, APPLE_PAY_TOKEN, GOOGLE_PAY_TOKEN only
