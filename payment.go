@@ -25,7 +25,7 @@ const (
 type Payment struct {
 	token         string        `json:"-"`                   // Authtorisation token
 	apiLink       string        `json:"-"`                   // APILink sets payment gateway domain, no trailing slash
-	PublicKey     string        `json:"publicKey,omitempty"` // Merchant identification key	String	+
+	PublicKey     string        `json:"-"` // Merchant identification key	String	+
 	SiteID        string        `json:"siteId,omitempty"`
 	BillID        string        `json:"billId,omitempty"`        // Unique invoice identifier in merchant's system. It must be generated on your side with any means. It could be any sequence of digits and letters. Also you might use underscore _ and dash -. If not used, for each URL opening a new invoice is created. String(200)	-
 	PaymentID     string        `json:"paymentId,omitempty"`     // Payment operation unique identifier in RSP's system
@@ -59,7 +59,7 @@ type Payment struct {
 
 // PaymentMethod  holds payment type, card or applepay. googlepay data
 type PaymentMethod struct {
-	Type PaymentType `json:"type"` // Payment method type
+	Type PaymentType `json:"type,omitempty"` // Payment method type
 	// "CARD" — payment card
 	// "TOKEN" — card payment token
 	// "APPLE_PAY_TOKEN" — encrypted Apple Pay payment token
