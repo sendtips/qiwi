@@ -28,6 +28,17 @@ func TestBase64Decode(t *testing.T) {
 	}
 }
 
+func TestBadBase64Decode(t *testing.T) {
+	badbase64 := "я"
+
+	_, err := decodeBase64(badbase64)
+
+	if err == nil {
+		t.Error("No error on malformed Base64")
+	}
+
+}
+
 func TestApplePay(t *testing.T) {
 	var amount int = 500 // test amount 5.00RUB
 
