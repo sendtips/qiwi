@@ -41,7 +41,7 @@ func newRequest(ctx context.Context, method, link, apiToken string, payload []by
 	req.Header.Set("User-Agent", userAgent+"/"+Version)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Bearer", apiToken)
+	req.Header.Set("Authorization", "Bearer " + apiToken)
 
 	return req, err
 }
