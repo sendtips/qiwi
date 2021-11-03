@@ -45,7 +45,7 @@ func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err e
 	p.Amount = NewAmountInRubles(amount)
 
 	// Make request link
-	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.SiteID, p.PaymentID)
+	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.SiteID, p.BillID)
 
 	// Send request
 	err = proceedRequest(ctx, "PUT", requestLink, p)

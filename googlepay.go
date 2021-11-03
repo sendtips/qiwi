@@ -27,7 +27,7 @@ func (p *Payment) GooglePay(ctx context.Context, amount int, token []byte) error
 	p.Amount = NewAmountInRubles(amount)
 
 	// Make request link
-	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.SiteID, p.PaymentID)
+	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.SiteID, p.BillID)
 
 	err = proceedRequest(ctx, "PUT", requestLink, p)
 
