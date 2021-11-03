@@ -25,18 +25,12 @@ type APHeader struct {
 	TransactionID string `json:"transactionId"`
 }
 
-// decodeBase64 return base64 decoded string
-// used internally to "unpack" applepay token
-func decodeBase64(enc string) ([]byte, error) {
-	return base64.StdEncoding.DecodeString(enc)
-}
-
 // ApplePay executes payment via ApplePay
 // Pass context, amount and ApplePay token string
 func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err error) {
 
 	// Decode token from base64
-	data, err := decodeBase64(token)
+	data, err := base64.StdEncoding.DecodeString(token)
 	if err != nil {
 		return fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 	}

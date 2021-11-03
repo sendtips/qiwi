@@ -13,27 +13,13 @@ import (
 	"testing"
 )
 
-func TestBase64Decode(t *testing.T) {
-	enc := "YWJjMTIzIT8kKiYoKSctPUB+"
-	expected := "abc123!?$*&()'-=@~"
-
-	res, err := decodeBase64(enc)
-
-	if string(res) != expected {
-		t.Errorf("Wrong function return: %s, expected: %s", enc, expected)
-	}
-
-	if err != nil {
-		t.Errorf("Error occurred: %s", err)
-	}
-}
-
 func TestBadBase64Decode(t *testing.T) {
-	badbase64 := "я"
+	badpayload := "`" // illegal char
 
-	_, err := decodeBase64(badbase64)
+	pay := New("billId", "SiteID", "TOKEN", "")
+	err := pay.ApplePay(context.TODO(), 300, badpayload)
 
-	if err == nil {
+	if !errors.Is(err, ErrBadJSON) {
 		t.Error("No error on malformed Base64")
 	}
 
