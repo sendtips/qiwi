@@ -2,33 +2,14 @@ package qiwi
 
 import (
 	"context"
-	"fmt"
-
-	// "net"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"reflect"
 	"testing"
 )
-
-// func TestInit(t *testing.T) {
-// 	var link, site, token string = "123", "site123", "token123"
-// 	Init(link, site, token)
-//
-// 	if apiLink != link {
-// 		t.Errorf("Init() wrong return %T must be %T type", apiLink, link)
-// 	}
-//
-// 	if site != apiSiteID {
-// 		t.Errorf("Init() wrong return %T must be %T type", apiSiteID, site)
-// 	}
-//
-// 	if apiToken != token {
-// 		t.Errorf("Init() wrong return %T must be %T type", apiToken, token)
-// 	}
-// }
 
 func TestNew(t *testing.T) {
 	trans := New("billId", "SiteID", "TOKEN", "")

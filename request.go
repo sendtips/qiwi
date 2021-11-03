@@ -63,8 +63,8 @@ func proceedRequest(ctx context.Context, method, path string, p *Payment) error 
 	ctxTimeout, cancel := context.WithTimeout(ctx, requestTimeout)
 	defer cancel()
 
-	apilink := p.apiLink + path
-	req, err = newRequest(ctxTimeout, method, apilink, p.token, payload)
+	link := p.apiLink + path
+	req, err = newRequest(ctxTimeout, method, link, p.token, payload)
 	if err != nil {
 		return err
 	}

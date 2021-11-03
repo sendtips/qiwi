@@ -4,6 +4,9 @@ import (
 	"fmt"
 )
 
+// apiLink holds QIWI API domain part of URL as string
+const apiLink string = "https://api.qiwi.com"
+
 // PaymentType holds type of payment
 type PaymentType string
 
@@ -184,11 +187,11 @@ type QIWIError struct {
 }
 
 // New create card payment session
-func New(billId, siteid, token, apiLink string) *Payment {
-	if apiLink == "" {
-		apiLink = "https://api.qiwi.com/partner/v1/sites" // no trailing slash
+func New(billId, siteid, token, endpoint string) *Payment {
+	if endpoint == "" {
+		endpoint = apiLink
 	}
-	return &Payment{SiteID: siteid, BillID: billId, apiLink: apiLink, token: token}
+	return &Payment{SiteID: siteid, BillID: billId, apiLink: endpoint, token: token}
 }
 
 // checkErrors checks if errors is presented in reply
