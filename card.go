@@ -61,17 +61,10 @@ type CardToken struct {
 // CardRequest request payment session on RSP site
 func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) (err error) {
 
-	// Moscow time
-	moscowTimezone, err := time.LoadLocation("Europe/Moscow")
-	if err != nil {
-		return err
-	}
-	moscowNow := time.Now().In(moscowTimezone)
-
 	p.PublicKey = pubKey
 	p.PaymentMethod.Type = CardPayment
 	p.Amount = NewAmountInRubles(amount)
-	p.Expiration = QIWITime{Time: moscowNow.Add(expirationTime)}
+	p.Expiration = NowInMoscow().Add(expirationTime)
 
 	// Make request link
 	requestLink := fmt.Sprintf("/payin/v1/sites/%s/billid/%s", p.SiteID, p.BillID)

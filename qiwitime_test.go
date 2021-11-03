@@ -31,3 +31,16 @@ func TestQIWITime(t *testing.T) {
 	}
 
 }
+
+func TestNowInMoscow(t *testing.T) {
+
+	d := 3 * time.Hour
+	now := time.Now().UTC().Add(d)
+
+	moscowTime := NowInMoscow()
+
+	if moscowTime.Hour() != now.Hour() {
+		t.Error("Wrong NowInMoscow")
+	}
+
+}

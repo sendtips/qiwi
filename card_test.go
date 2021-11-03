@@ -85,7 +85,7 @@ func TestLocationTime(t *testing.T) {
 	msktime := time.Now().In(msktz)
 
 	if pay.Expiration.Before(msktime) {
-		t.Error("Bad expiration time")
+		t.Error("Bad expiration time", pay.Expiration, msktime)
 	}
 
 }
