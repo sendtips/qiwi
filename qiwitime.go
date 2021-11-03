@@ -21,7 +21,7 @@ func NowInMoscow() QIWITime {
 	return QIWITime{Time: time.Now().In(tz)}
 }
 
-// Add to current time in Moscow
+// Add delta to time
 func (qt QIWITime) Add(d time.Duration) QIWITime {
 	qt.Time = qt.Time.Add(d)
 	return qt
