@@ -1,8 +1,11 @@
 package qiwi
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -47,6 +50,24 @@ func TestCardRequest(t *testing.T) {
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "PUT":
+			var buf bytes.Buffer
+			var payload Payment
+
+			_, _ = io.Copy(&buf, r.Body)
+
+			_ = json.Unmarshal(buf.Bytes(), &payload)
+			isSale := false
+			for _, flag := range payload.Flags.Flags {
+				if flag == "SALE" {
+					isSale = true
+					break
+				}
+			}
+			if !isSale {
+				fmt.Println(w, errReply)
+				return
+			}
+
 			fmt.Fprintln(w, reply)
 		default:
 			fmt.Fprint(w, errReply)

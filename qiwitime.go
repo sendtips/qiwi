@@ -22,9 +22,9 @@ func NowInMoscow() QIWITime {
 }
 
 // Add delta to time
-func (qt QIWITime) Add(d time.Duration) QIWITime {
+func (qt QIWITime) Add(d time.Duration) *QIWITime {
 	qt.Time = qt.Time.Add(d)
-	return qt
+	return &qt
 }
 
 // UnmarshalJSON unpacks QIWI datetime format in go time.Time
@@ -38,6 +38,6 @@ func (qt *QIWITime) UnmarshalJSON(b []byte) (err error) {
 }
 
 // MarshalJSON packs time.Time to QIWI datetime format
-func (qt QIWITime) MarshalJSON() ([]byte, error) {
+func (qt *QIWITime) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%s"`, qt.Format(qiwitime))), nil
 }

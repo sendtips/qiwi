@@ -65,6 +65,7 @@ func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) er
 	p.PaymentMethod.Type = CardPayment
 	p.Amount = NewAmountInRubles(amount)
 	p.Expiration = NowInMoscow().Add(expirationTime)
+	p.Flags.Flags = []string{"SALE"} // one-step payment
 
 	// Make request link
 	requestLink := fmt.Sprintf("/payin/v1/sites/%s/billid/%s", p.SiteID, p.BillID)

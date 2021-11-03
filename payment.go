@@ -33,10 +33,10 @@ type Payment struct {
 	RefundID      string        `json:"refundId,omitempty"`      // Refund operation unique identifier in RSP's system
 	Amount        Amount        `json:"amount,omitempty"`        // Amount of customer order rounded down to 2 digits (always in rubles)
 	PaymentMethod PaymentMethod `json:"paymentMethod,omitempty"` // Payment method
-	Customer      Customer      `json:"customer,omitempty"`      // Information about the customer
-	Creation      QIWITime      `json:"creationDateTime,omitempty"`
-	NotifyDate    QIWITime      `json:"createddatetime,omitempty"` // Time used in Notify
-	Expiration    QIWITime      `json:"expirationDateTime,omitempty"`
+	Customer      *Customer     `json:"customer,omitempty"`      // Information about the customer
+	Creation      *QIWITime     `json:"creationDateTime,omitempty"`
+	NotifyDate    *QIWITime     `json:"createddatetime,omitempty"` // Time used in Notify
+	Expiration    *QIWITime     `json:"expirationDateTime,omitempty"`
 	Comment       string        `json:"comment,omitempty"`    // Comment to the invoice
 	SuccessURL    string        `json:"successUrl,omitempty"` // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
 	PayURL        string        `json:"payUrl,omitempty"`     // Payment page on QIWI site
@@ -45,6 +45,7 @@ type Payment struct {
 	// extras[cf3]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf4]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf5]	Extra field to add any information to invoice data	URL-encoded string
+	Flags
 	Reply
 
 	QIWIError
@@ -80,13 +81,13 @@ type PaymentMethod struct {
 	// string(26)
 	//Customer card holder (Latin letters). For type=CARD only
 
-	ApplePayToken PKPaymentToken `json:"paymentData,omitempty"`
+	ApplePayToken *PKPaymentToken `json:"paymentData,omitempty"`
 	//optional
 	//string
 	//Payment token string. For type=TOKEN, APPLE_PAY_TOKEN, GOOGLE_PAY_TOKEN only
 	Token string `json:"paymentToken,omitempty"`
 
-	T3DS T3DS `json:"external3dSec,omitempty"`
+	T3DS *T3DS `json:"external3dSec,omitempty"`
 	//optional
 	//object
 	//Payment data from Apple Pay or Google Pay.
@@ -123,9 +124,15 @@ type Customer struct {
 	Phone   string `json:"phone,omitempty"`
 }
 
+// Extra flags to QIWI API
+// like "flags": ["SALE"]
+type Flags struct {
+	Flags []string `json:"flags,omitempty"`
+}
+
 // Reply from RSP
 type Reply struct {
-	Status Status `json:"status,omitempty"`
+	Status *Status `json:"status,omitempty"`
 }
 
 // StatusCode operation status reflects its current state
@@ -169,7 +176,7 @@ const (
 // Status of request
 type Status struct {
 	Value        StatusCode  `json:"value,omitempty"`
-	Date         QIWITime    `json:"changedDateTime,omitempty"`
+	Date         *QIWITime   `json:"changedDateTime,omitempty"`
 	Reason       StatusError `json:"reason,omitempty"`
 	ReasonNotify StatusError `json:"reasonCode,omitempty"`
 	Message      string      `json:"reasonMessage,omitempty"`
@@ -178,12 +185,12 @@ type Status struct {
 
 // QIWIError holds error reply from a carrier
 type QIWIError struct {
-	Service     string   `json:"serviceName"` // Service name produced the error
-	ErrCode     string   `json:"errorCode"`   // Error code
-	Description string   `json:"description"` // Error description for RSP
-	ErrMessage  string   `json:"userMessage"` // Error description for Customer
-	ErrDate     QIWITime `json:"dateTime"`    // Error date and time
-	TraceID     string   `json:"traceId"`     // Error Log unique ID
+	Service     string    `json:"serviceName,omitempty"` // Service name produced the error
+	ErrCode     string    `json:"errorCode,omitempty"`   // Error code
+	Description string    `json:"description,omitempty"` // Error description for RSP
+	ErrMessage  string    `json:"userMessage,omitempty"` // Error description for Customer
+	ErrDate     *QIWITime `json:"dateTime,omitempty"`    // Error date and time
+	TraceID     string    `json:"traceId,omitempty"`     // Error Log unique ID
 }
 
 // New create card payment session
