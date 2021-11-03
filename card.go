@@ -59,7 +59,7 @@ type CardToken struct {
 }
 
 // CardRequest request payment session on RSP site
-func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) (err error) {
+func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) error {
 
 	p.PublicKey = pubKey
 	p.PaymentMethod.Type = CardPayment
