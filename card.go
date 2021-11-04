@@ -62,13 +62,15 @@ type CardToken struct {
 func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) error {
 
 	p.PublicKey = pubKey
-	p.PaymentMethod.Type = CardPayment
+	//p.PaymentMethod.Type = CardPayment
 	p.Amount = NewAmountInRubles(amount)
 	p.Expiration = NowInMoscow().Add(expirationTime)
 	p.Flags.Flags = []string{"SALE"} // one-step payment
 
 	// Make request link
 	requestLink := fmt.Sprintf("/payin/v1/sites/%s/bills/%s", p.SiteID, p.BillID)
+	p.SiteID = ""
+	p.BillID = ""
 
 	return proceedRequest(ctx, "PUT", requestLink, p)
 
