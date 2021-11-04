@@ -31,7 +31,7 @@ func TestNewRequest(t *testing.T) {
 
 func TestRequestHeaders(t *testing.T) {
 	link, _ := url.Parse("http://example.com/Init")
-	req, _ := newRequest(context.TODO(), "POST", link.String(), "5c4b25xx93aa435d9cb8cd17480356f9", nil)
+	req, _ := newRequest(context.TODO(), "POST", link.String(), "TOKEN", nil)
 
 	if req.URL.Hostname() != link.Hostname() {
 		t.Error("Wrong hostname")
@@ -45,7 +45,7 @@ func TestRequestHeaders(t *testing.T) {
 		t.Error("Wrong Accept")
 	}
 
-	if req.Header.Get("Authorization") != "Bearer 5c4b25xx93aa435d9cb8cd17480356f9" {
+	if req.Header.Get("Authorization") != "Bearer TOKEN" {
 		t.Error("No authorization token")
 	}
 }
