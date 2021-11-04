@@ -5,7 +5,7 @@ import (
 )
 
 // apiLink holds QIWI API domain part of URL as string
-const apiLink string = "https://api.qiwi.com"
+const apiLink string = "https://api.qiwi.com/partner"
 
 // PaymentType holds type of payment
 type PaymentType string
