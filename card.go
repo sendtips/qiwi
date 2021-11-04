@@ -20,7 +20,7 @@ const (
 
 // Card holds data for card payment.
 type Card struct {
-	CheckDate  QIWITime   `json:"checkOperationDate"`      // System date of the operation
+	CheckDate  Time       `json:"checkOperationDate"`      // System date of the operation
 	RequestID  string     `json:"requestUid"`              // Card verification operation unique identifier String(200)
 	Status     Status     `json:"status"`                  // Card verification status	String
 	Valid      bool       `json:"isValidCard"`             // Logical flag means card is valid for purchases Bool
@@ -49,10 +49,10 @@ type CardInfo struct {
 
 // CardToken shadowed card.
 type CardToken struct {
-	Token          string   `json:"token"`       // Card payment token	String
-	Name           string   `json:"name"`        // Masked card PAN for which payment token issued	String
-	ExpirationDate QIWITime `json:"expiredDate"` // Payment token expiration date. ISO-8601
-	Account        string   `json:"account"`     // Customer account for which payment token issued	String
+	Token          string `json:"token"`       // Card payment token	String
+	Name           string `json:"name"`        // Masked card PAN for which payment token issued	String
+	ExpirationDate Time   `json:"expiredDate"` // Payment token expiration date. ISO-8601
+	Account        string `json:"account"`     // Customer account for which payment token issued	String
 }
 
 // CardRequest request payment session on RSP site.

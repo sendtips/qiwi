@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestQIWITime(t *testing.T) {
+func TestTime(t *testing.T) {
 	type TimeCompare struct {
 		Time time.Time `json:"datetime"`
 	}
