@@ -14,26 +14,13 @@ import (
 )
 
 func Examplezlibzompress() {
-	// eJzzSM3JyVcozy/KSQEAGKsEPQ== -- compressed and base64 encoded
-
-	// if string(res) != string(result) {
-	// 	t.Errorf("Wrong result of compress function %+q", res)
-	// }
-
 	data := []byte("Hello world")
 	res := zlibzompress(data)
-	fmt.Println([]byte(res))
+	fmt.Println(res)
 	// Output: [120 156 242 72 205 201 201 87 40 207 47 202 73 1 4 0 0 255 255 24 171 4 61]
 }
 
 func TestGooglePay(t *testing.T) {
-
-	// google_token_structure := []byte(`
-	// "paymentMethod": {
-	// 	"type": "GOOGLE_PAY_TOKEN",
-	// 	"paymentToken": "eJxVUtuK2zAQfd+vCHGShS9mS0hb8YChjabx"
-	// 	}
-	// `)
 	type GooglePayToken struct {
 		ProtoVer string `json:"protocolVersion"`
 	}
@@ -93,9 +80,6 @@ func TestGooglePay(t *testing.T) {
 			return
 		}
 
-		//
-		// enc := base64.NewDecoder(base64.StdEncoding, )
-		// enc.Read(buf.Bytes())
 		dec, err := base64.StdEncoding.DecodeString(p.PaymentMethod.Token)
 		if err != nil {
 			fmt.Fprintln(w, `{
@@ -123,7 +107,8 @@ func TestGooglePay(t *testing.T) {
 			return
 		}
 		defer data.Close()
-		_, err = io.Copy(&b, data)
+
+		_, err = io.Copy(&b, data) //nolint
 		if err != nil {
 			fmt.Fprintln(w, `{
 				  "serviceName" : "payin-core",
@@ -196,5 +181,4 @@ func TestGooglePay(t *testing.T) {
 	if err != nil {
 		t.Errorf("GooglePay method error: %s", err)
 	}
-
 }

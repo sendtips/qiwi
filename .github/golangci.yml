@@ -1,0 +1,104 @@
+--- 
+linters: 
+  disable: 
+    - cyclop
+    - depguard
+    - dogsled
+    - dupl
+    - errname
+    - errorlint
+    - exhaustivestruct
+    - forbidigo
+    - funlen
+    - gci
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - gocyclo
+    - godox
+    - goerr113
+    - goheader
+    - gomoddirectives
+    - gomodguard
+    - goprintffuncname
+    - ifshort
+    - lll
+    - maligned
+    - nlreturn
+    - paralleltest
+    - tagliatelle
+    # - tenv
+    - testpackage
+    - thelper
+    - tparallel
+    # - varnamelen
+    - whitespace
+    - wrapcheck
+    - wsl
+  enable: 
+    - deadcode
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unused
+    - varcheck
+    - asciicheck
+    - bodyclose
+    # - contextcheck
+    - durationcheck
+    - exhaustive
+    - exportloopref
+    - forcetypeassert
+    - goconst
+    - gocritic
+    - godot
+    - gofmt
+    - gofumpt
+    - goimports
+    # - golint
+    - gomnd
+    - gosec
+    - importas
+    # - interfacer
+    - makezero
+    - misspell
+    - nakedret
+    - nestif
+    - nilerr
+    - noctx
+    - nolintlint
+    - prealloc
+    - predeclared
+    - promlinter
+    - revive
+    - rowserrcheck
+    # - scopelint
+    - sqlclosecheck
+    - stylecheck
+    - unconvert
+    - unparam
+    - wastedassign
+linters-settings: 
+  gocritic: 
+    enabled-tags: 
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+output: 
+  format: line-number
+  print-issued-lines: false
+  print-linter-name: true
+  sort-results: false
+run: 
+  allow-parallel-runners: false
+  concurrency: 4
+  issues-exit-code: 1
+  skip-dirs-use-default: true
+  tests: true
+  timeout: 10m

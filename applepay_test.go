@@ -22,11 +22,10 @@ func TestBadBase64Decode(t *testing.T) {
 	if !errors.Is(err, ErrBadJSON) {
 		t.Error("No error on malformed Base64")
 	}
-
 }
 
 func TestApplePay(t *testing.T) {
-	var amount int = 500 // test amount 5.00RUB
+	amount := 500 // test amount 5.00RUB
 
 	// "paymentMethod": {
 	// 	  "type": "APPLE_PAY_TOKEN",
@@ -50,7 +49,7 @@ func TestApplePay(t *testing.T) {
 		var p Payment
 		var err error
 
-		if r.Method != "PUT" {
+		if r.Method != "PUT" { // nolint
 			fmt.Fprintln(w, `{
 				  "serviceName" : "payin-core",
 				  "errorCode" : "validation.wrongmethod",
@@ -111,11 +110,9 @@ func TestApplePay(t *testing.T) {
 	if err != nil {
 		t.Errorf("ApplePay method error: %s", err)
 	}
-
 }
 
 func TestApplePayBadToken(t *testing.T) {
-
 	appleBADToken := []byte(`{
 	  {{bad json
 	}`)
@@ -168,5 +165,4 @@ func TestApplePayBadToken(t *testing.T) {
 	if !errors.Is(err, ErrBadJSON) {
 		t.Errorf("ApplePay bad token json wrong error: %s", err)
 	}
-
 }

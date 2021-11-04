@@ -29,7 +29,6 @@ func TestAmount(t *testing.T) {
 }
 
 func TestJSONAmount(t *testing.T) {
-
 	tests := []struct {
 		input int
 		want  string
@@ -57,7 +56,6 @@ func TestJSONAmount(t *testing.T) {
 }
 
 func TestJSONUnmarshalAmount(t *testing.T) {
-
 	tests := []struct {
 		want  int
 		err   error
@@ -81,7 +79,7 @@ func TestJSONUnmarshalAmount(t *testing.T) {
 		if err != nil {
 			if !errors.Is(err, test.err) {
 				t.Errorf("JSON Marshal error: %s", err)
-			} //123
+			} // 123
 		}
 
 		if am.Value.Int() != test.want {

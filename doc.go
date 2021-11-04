@@ -39,5 +39,5 @@ Or you may process received data by yourself and pass the payload to NewNotify
 
 
 QIWI uses ISO8601 (2021-07-29T16:30:00+03:00) time format,
-so use a build-in QIWITime custom time type */
+so use a build-in Time custom time type */
 package qiwi

@@ -51,12 +51,10 @@ func TestRequestHeaders(t *testing.T) {
 }
 
 func TestProceedBadJSONRequest(t *testing.T) {
-
 	// ErrBadJSON
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "{{{{bad json")
 	}))
-	//serv_badjson.Listener = listner
 	serv.Start()
 	defer serv.Close()
 
@@ -69,6 +67,7 @@ func TestProceedBadJSONRequest(t *testing.T) {
 		t.Errorf("Wrong error for bad JSON return: %s", err)
 	}
 }
+
 func TestProceedBadHTTPStatusRequest(t *testing.T) {
 	// ErrBadStatusReply
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +85,7 @@ func TestProceedBadHTTPStatusRequest(t *testing.T) {
 		t.Errorf("Wrong error for error HTTP error code response: %s", err)
 	}
 }
+
 func TestProceeRequestWithError(t *testing.T) {
 	// ErrReply
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -131,7 +131,6 @@ func TestProceedRequest(t *testing.T) {
 	payload := New("billId", "SiteID", "TOKEN", serv.URL)
 
 	err := proceedRequest(context.TODO(), "POST", "/Init", payload)
-
 	if err != nil {
 		t.Errorf("Error shoud be empty: %s", err)
 	}

@@ -5,30 +5,32 @@ import (
 	"time"
 )
 
-// QIWITime holds ISO8601 datetime with timezone.
-// Pattern: YYYY-MM-DDThh:mm:ss±hh:mm
-type QIWITime struct {
+// Time holds ISO8601 datetime with timezone.
+// Pattern: YYYY-MM-DDThh:mm:ss±hh:mm.
+type Time struct {
 	time.Time
 }
 
-const moscowtz = "Europe/Moscow"
-const qiwidate = "2006-01-02T15:04:05"
-const qiwitime = "2006-01-02T15:04:05-07:00"
+const (
+	moscowtz = "Europe/Moscow"
+	qiwidate = "2006-01-02T15:04:05"
+	qiwitime = "2006-01-02T15:04:05-07:00"
+)
 
-// NowInMoscow returns current time in Moscow (MSK+3)
-func NowInMoscow() QIWITime {
+// NowInMoscow returns current time in Moscow (MSK+3).
+func NowInMoscow() Time {
 	tz, _ := time.LoadLocation(moscowtz)
-	return QIWITime{Time: time.Now().In(tz)}
+	return Time{Time: time.Now().In(tz)}
 }
 
-// Add delta to time
-func (qt QIWITime) Add(d time.Duration) *QIWITime {
+// Add delta to time.
+func (qt Time) Add(d time.Duration) *Time {
 	qt.Time = qt.Time.Add(d)
 	return &qt
 }
 
-// UnmarshalJSON unpacks QIWI datetime format in go time.Time
-func (qt *QIWITime) UnmarshalJSON(b []byte) (err error) {
+// UnmarshalJSON unpacks QIWI datetime format in go time.Time.
+func (qt *Time) UnmarshalJSON(b []byte) (err error) {
 	s := string(b[1 : len(b)-1])
 	qt.Time, err = time.Parse(time.RFC3339, s)
 	if err != nil {
@@ -37,7 +39,7 @@ func (qt *QIWITime) UnmarshalJSON(b []byte) (err error) {
 	return err
 }
 
-// MarshalJSON packs time.Time to QIWI datetime format
-func (qt *QIWITime) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, qt.Format(qiwitime))), nil
+// MarshalJSON packs time.Time to QIWI datetime format.
+func (qt *Time) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`%q`, qt.Format(qiwitime))), nil
 }

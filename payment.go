@@ -4,24 +4,24 @@ import (
 	"fmt"
 )
 
-// apiLink holds QIWI API domain part of URL as string
+// apiLink holds QIWI API domain part of URL as string.
 const apiLink string = "https://api.qiwi.com/partner" // no trailing slash
 
-// PaymentType holds type of payment
+// PaymentType holds type of payment.
 type PaymentType string
 
 const (
-	// CardPayment for card payments
+	// CardPayment for card payments.
 	CardPayment PaymentType = "CARD"
-	// TokenPayment for shadowed card numbers payment
+	// TokenPayment for shadowed card numbers payment.
 	TokenPayment PaymentType = "TOKEN"
-	// ApplePayPayment ApplePay payment
+	// ApplePayPayment ApplePay payment.
 	ApplePayPayment PaymentType = "APPLE_PAY_TOKEN"
-	// GooglePayPayment GooglePay payment
+	// GooglePayPayment GooglePay payment.
 	GooglePayPayment PaymentType = "GOOGLE_PAY_TOKEN"
 )
 
-// Payment main data structure, holds requests and responses on that requests from RSP
+// Payment main data structure, holds requests and responses on that requests from RSP.
 type Payment struct {
 	token         string         `json:"-"` // Authtorisation token
 	apiLink       string         `json:"-"` // APILink sets payment gateway domain, no trailing slash
@@ -34,9 +34,9 @@ type Payment struct {
 	Amount        Amount         `json:"amount,omitempty"`        // Amount of customer order rounded down to 2 digits (always in rubles)
 	PaymentMethod *PaymentMethod `json:"paymentMethod,omitempty"` // Payment method
 	Customer      *Customer      `json:"customer,omitempty"`      // Information about the customer
-	Creation      *QIWITime      `json:"creationDateTime,omitempty"`
-	NotifyDate    *QIWITime      `json:"createddatetime,omitempty"` // Time used in Notify
-	Expiration    *QIWITime      `json:"expirationDateTime,omitempty"`
+	Creation      *Time          `json:"creationDateTime,omitempty"`
+	NotifyDate    *Time          `json:"createddatetime,omitempty"` // Time used in Notify
+	Expiration    *Time          `json:"expirationDateTime,omitempty"`
 	Comment       string         `json:"comment,omitempty"`    // Comment to the invoice
 	SuccessURL    string         `json:"successUrl,omitempty"` // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
 	PayURL        string         `json:"payUrl,omitempty"`     // Payment page on QIWI site
@@ -48,16 +48,10 @@ type Payment struct {
 	Flags
 	Reply
 
-	QIWIError
+	Error
 }
 
-// type PaymentMethod struct {
-// 	//CardMethod
-// 	ApplePayMethod
-// 	//GooglePayMethod
-// }
-
-// PaymentMethod  holds payment type, card or applepay. googlepay data
+// PaymentMethod  holds payment type, card or applepay. googlepay data.
 type PaymentMethod struct {
 	Type PaymentType `json:"type,omitempty"` // Payment method type
 	// "CARD" — payment card
@@ -67,57 +61,57 @@ type PaymentMethod struct {
 	PAN string `json:"pan,omitempty"` // optional string(19) Card string //Card number. For type=CARD only
 
 	ExpiryDate string `json:"expiryDate,omitempty"`
-	//optional
-	//string(5)
-	//Card expiry date (MM/YY). For type=CARD only
+	// optional
+	// string(5)
+	// Card expiry date (MM/YY). For type=CARD only
 
 	CVV string `json:"cvv2,omitempty"`
-	//optional
-	//string(4)
-	//Card CVV2/CVC2. For type=CARD only
+	// optional
+	// string(4)
+	// Card CVV2/CVC2. For type=CARD only
 
 	Name string `json:"holderName,omitempty"`
 	// optional
 	// string(26)
-	//Customer card holder (Latin letters). For type=CARD only
+	// Customer card holder (Latin letters). For type=CARD only
 
 	ApplePayToken *PKPaymentToken `json:"paymentData,omitempty"`
-	//optional
-	//string
-	//Payment token string. For type=TOKEN, APPLE_PAY_TOKEN, GOOGLE_PAY_TOKEN only
+	// optional
+	// string
+	// Payment token string. For type=TOKEN, APPLE_PAY_TOKEN, GOOGLE_PAY_TOKEN only
 	Token string `json:"paymentToken,omitempty"`
 
 	T3DS *T3DS `json:"external3dSec,omitempty"`
-	//optional
-	//object
-	//Payment data from Apple Pay or Google Pay.
+	// optional
+	// object
+	// Payment data from Apple Pay or Google Pay.
 
 }
 
-// T3DS 3D-Secure
+// T3DS 3D-Secure.
 type T3DS struct {
 	Type string `json:"type"`
-	//require
-	//string
-	//Payment data type: APPLE_PAY or GOOGLE_PAY.
+	// require
+	// string
+	// Payment data type: APPLE_PAY or GOOGLE_PAY.
 
 	OnlinePaymentCrypto string `json:"onlinePaymentCryptogram,omitempty"`
-	//optional
-	//string
+	// optional
+	// string
 	// Contents of "onlinePaymentCryptogram" field from decrypted Apple payment token. For type=APPLE_PAY only.
 
 	Cryptogram string `json:"cryptogram,omitempty"`
-	//optional
-	//string
+	// optional
+	// string
 	// Contents of "cryptogram" from decrypted Google payment token. For type=GOOGLE_PAY only.
 
 	ECIIndicator string `json:"eciIndicator,omitempty"`
-	//optional
-	//string(2)
-	//ECI indicator. It should be sent if it is received in Apple (Google) payment token. Otherwise, do not send this parameter.
+	// optional
+	// string(2)
+	// ECI indicator. It should be sent if it is received in Apple (Google) payment token. Otherwise, do not send this parameter.
 }
 
-// Customer user related data
+// Customer user related data.
 type Customer struct {
 	Account string `json:"account,omitempty"`
 	Email   string `json:"email,omitempty"`
@@ -125,17 +119,17 @@ type Customer struct {
 }
 
 // Extra flags to QIWI API
-// like "flags": ["SALE"]
+// like "flags": ["SALE"].
 type Flags struct {
 	Flags []string `json:"flags,omitempty"`
 }
 
-// Reply from RSP
+// Reply from RSP.
 type Reply struct {
 	Status *Status `json:"status,omitempty"`
 }
 
-// StatusCode operation status reflects its current state
+// StatusCode operation status reflects its current state.
 type StatusCode string
 
 const (
@@ -146,7 +140,7 @@ const (
 	StatusFail      StatusCode = "DECLINE"   // Request for payment confirmation is rejected Notifications, API responses
 )
 
-// StatusError API errors describe a reason for rejection of the operation
+// StatusError API errors describe a reason for rejection of the operation.
 type StatusError string
 
 const (
@@ -173,37 +167,36 @@ const (
 	StatusPayinProcessingError        StatusError = "PAYIN_PROCESSING_ERROR"         // Payment processing error
 )
 
-// Status of request
+// Status of request.
 type Status struct {
 	Value        StatusCode  `json:"value,omitempty"`
-	Date         *QIWITime   `json:"changedDateTime,omitempty"`
+	Date         *Time       `json:"changedDateTime,omitempty"`
 	Reason       StatusError `json:"reason,omitempty"`
 	ReasonNotify StatusError `json:"reasonCode,omitempty"`
 	Message      string      `json:"reasonMessage,omitempty"`
 	ErrCode      string      `jsob:"errorCode,omitempty"`
 }
 
-// QIWIError holds error reply from a carrier
-type QIWIError struct {
-	Service     string    `json:"serviceName,omitempty"` // Service name produced the error
-	ErrCode     string    `json:"errorCode,omitempty"`   // Error code
-	Description string    `json:"description,omitempty"` // Error description for RSP
-	ErrMessage  string    `json:"userMessage,omitempty"` // Error description for Customer
-	ErrDate     *QIWITime `json:"dateTime,omitempty"`    // Error date and time
-	TraceID     string    `json:"traceId,omitempty"`     // Error Log unique ID
+// Error holds error reply from a carrier.
+type Error struct {
+	Service     string `json:"serviceName,omitempty"` // Service name produced the error
+	ErrCode     string `json:"errorCode,omitempty"`   // Error code
+	Description string `json:"description,omitempty"` // Error description for RSP
+	ErrMessage  string `json:"userMessage,omitempty"` // Error description for Customer
+	ErrDate     *Time  `json:"dateTime,omitempty"`    // Error date and time
+	TraceID     string `json:"traceId,omitempty"`     // Error Log unique ID
 }
 
-// New create card payment session
-func New(billId, siteid, token, endpoint string) *Payment {
+// New create card payment session.
+func New(billID, siteID, token, endpoint string) *Payment {
 	if endpoint == "" {
 		endpoint = apiLink
 	}
-	return &Payment{SiteID: siteid, BillID: billId, apiLink: endpoint, token: token}
+	return &Payment{SiteID: siteID, BillID: billID, apiLink: endpoint, token: token}
 }
 
-// checkErrors checks if errors is presented in reply
+// checkErrors checks if errors is presented in reply.
 func (p *Payment) checkErrors(err error) error {
-
 	if err == nil {
 		if p.ErrCode != "" {
 			err = fmt.Errorf("[QIWI] RSP Response %w: %s (%s)", ErrReplyWithError, p.Description, p.ErrCode)
@@ -211,5 +204,4 @@ func (p *Payment) checkErrors(err error) error {
 	}
 
 	return err
-
 }

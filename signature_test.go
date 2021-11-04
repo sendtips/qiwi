@@ -6,16 +6,6 @@ import (
 )
 
 func TestSignature(t *testing.T) {
-
-	// headers := `
-	// POST /qiwi-notify.php HTTP/1.1
-	// Accept: application/json
-	// Content-Type: application/json
-	// Signature: j4wnfnzd***v5mv2w=
-	// Host: server.ru
-	// `
-
-	// TEST PAYLOADS
 	// TEST PAYLOADS
 	payloadPayment := []byte(`
     {
@@ -247,11 +237,10 @@ func TestSignature(t *testing.T) {
 			t.Errorf("Signature payload JSON unmarshaling error: %s", err)
 		}
 
-		if !sig.Verify(notify) {
+		if !sig.Verify(&notify) {
 			t.Errorf("Wrong signature")
 		}
 	}
-
 }
 
 func TestBadSignature(t *testing.T) {
@@ -280,7 +269,7 @@ func TestBadSignature(t *testing.T) {
 		t.Errorf("Signature payload JSON unmarshaling error: %s", err)
 	}
 
-	if sig.Verify(notify) {
+	if sig.Verify(&notify) {
 		t.Errorf("Bad signature shoud not pass")
 	}
 }

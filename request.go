@@ -12,30 +12,29 @@ import (
 )
 
 // requestTimeout sets timeout for context
-// A duration string is a possibly signed sequence of decimal numbers
+// A duration string is a possibly signed sequence of decimal numbers.
 const requestTimeout time.Duration = 15 * time.Second
 
 var (
-	// ErrBadJSON error throws when JSON marshal/unmarshal problem occurs
+	// ErrBadJSON error throws when JSON marshal/unmarshal problem occurs.
 	ErrBadJSON = errors.New("bad reply payload")
-	// ErrBadStatusReply is bad gateway status code
+	// ErrBadStatusReply is bad gateway status code.
 	ErrBadStatusReply = errors.New("bad status reply")
-	// ErrReplyWithError business-logic error
+	// ErrReplyWithError business-logic error.
 	ErrReplyWithError = errors.New("error in reply")
-	// ErrBadSignature wrong signature error
+	// ErrBadSignature wrong signature error.
 	ErrBadSignature = errors.New("wrong signature")
 )
 
-// global client to reuse existing connections
+// global client to reuse existing connections.
 var client http.Client
 
 func init() {
 	client = http.Client{}
 }
 
-// newRequest creates new http request to RSP
+// newRequest creates new http request to RSP.
 func newRequest(ctx context.Context, method, link, apiToken string, payload []byte) (*http.Request, error) {
-
 	req, err := http.NewRequestWithContext(ctx, method, link, bytes.NewBuffer(payload))
 	req.Header.Set("User-Agent", userAgent+"/"+Version)
 	req.Header.Set("Content-Type", "application/json")
@@ -46,7 +45,7 @@ func newRequest(ctx context.Context, method, link, apiToken string, payload []by
 }
 
 // proceedRequest deal with data prep and preceedRequest
-// handle response and pack all data back to our structure
+// handle response and pack all data back to our structure.
 func proceedRequest(ctx context.Context, method, path string, p *Payment) error {
 	var err error
 	var payload []byte
