@@ -6,15 +6,6 @@ import (
 )
 
 func TestSignature(t *testing.T) {
-	// headers := `
-	// POST /qiwi-notify.php HTTP/1.1
-	// Accept: application/json
-	// Content-Type: application/json
-	// Signature: j4wnfnzd***v5mv2w=
-	// Host: server.ru
-	// `
-
-	// TEST PAYLOADS
 	// TEST PAYLOADS
 	payloadPayment := []byte(`
     {

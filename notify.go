@@ -8,24 +8,24 @@ import (
 	"net/http"
 )
 
-// maxBodyBytes limit inbound payload to 64kb
+// maxBodyBytes limit inbound payload to 64kb.
 const maxBodyBytes int64 = 65536
 
-// NotifyType from RSP
+// NotifyType from RSP.
 type NotifyType string
 
 const (
-	// PaymentNotify for payment notification
+	// PaymentNotify for payment notification.
 	PaymentNotify NotifyType = "PAYMENT"
-	// CaptureNotify for capture (2 stage) payments
+	// CaptureNotify for capture (2 stage) payments.
 	CaptureNotify NotifyType = "CAPTURE"
-	// RefundNotify for refunds
+	// RefundNotify for refunds.
 	RefundNotify NotifyType = "REFUND"
-	// CheckCardNotify for card check requests
+	// CheckCardNotify for card check requests.
 	CheckCardNotify NotifyType = "CHECK_CARD"
 )
 
-// Notify holds incoming data from RSP
+// Notify holds incoming data from RSP.
 type Notify struct {
 	Type      NotifyType `json:"type"` // Notification type
 	Payment   Payment    `json:"payment,omitempty"`
@@ -35,7 +35,7 @@ type Notify struct {
 	Version   string     `json:"version"` // Notification version
 }
 
-// NewNotify returns Notify data from bytes
+// NewNotify returns Notify data from bytes.
 func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 	var notify Notify
 	var err error
@@ -58,7 +58,7 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 
 // NotifyParseHTTPRequest parses http request which returns Notify
 // and also protects against a malicious client streaming
-// an endless request body
+// an endless request body.
 func NotifyParseHTTPRequest(signkey string, w http.ResponseWriter, r *http.Request) (Notify, error) {
 	var payload bytes.Buffer
 

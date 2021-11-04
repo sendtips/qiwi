@@ -55,7 +55,6 @@ func TestProceedBadJSONRequest(t *testing.T) {
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "{{{{bad json")
 	}))
-	// serv_badjson.Listener = listner
 	serv.Start()
 	defer serv.Close()
 

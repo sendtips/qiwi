@@ -8,7 +8,7 @@ import (
 	"fmt"
 )
 
-// zlibzompress via zlib token data for googlepay
+// zlibzompress via zlib token data for googlepay.
 func zlibzompress(token []byte) []byte {
 	var b bytes.Buffer
 	w := zlib.NewWriter(&b)
@@ -18,7 +18,7 @@ func zlibzompress(token []byte) []byte {
 	return b.Bytes()
 }
 
-// GooglePay method executes Google Pay payment
+// GooglePay method executes Google Pay payment.
 func (p *Payment) GooglePay(ctx context.Context, amount int, token []byte) error {
 	var err error
 

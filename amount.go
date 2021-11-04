@@ -11,7 +11,6 @@ const (
 	rub currency = "RUB"
 	usd currency = "USD"
 	eur currency = "EUR"
-	// GBP Currency = "GBP"
 )
 
 // kopeeksInRuble used to make float amount value from int.
@@ -23,12 +22,12 @@ func toMoney(a int) money {
 	return money(float64(a) / kopeeksInRuble)
 }
 
-// Int returns amount in kopeks/cents
+// Int returns amount in kopeks/cents.
 func (m money) Int() int {
 	return int(float64(m) * kopeeksInRuble)
 }
 
-// String returns float with amount representation
+// String returns float with amount representation.
 func (m money) String() string {
 	return fmt.Sprintf("%.2f", m)
 }
@@ -55,7 +54,7 @@ func (m *money) UnmarshalJSON(data []byte) error {
 	return err
 }
 
-// Amount carry money amount and currency ISO 3-ALPHA code
+// Amount carry money amount and currency ISO 3-ALPHA code.
 type Amount struct {
 	Value    money    `json:"value"`
 	Currency currency `json:"currency"`
@@ -65,17 +64,17 @@ func newAmount(a int, cur currency) Amount {
 	return Amount{Value: toMoney(a), Currency: cur}
 }
 
-// NewAmountInRubles set amount in Russian Rubles
+// NewAmountInRubles set amount in Russian Rubles.
 func NewAmountInRubles(a int) Amount {
 	return newAmount(a, rub)
 }
 
-// NewAmountInDollars set amount in US Dollars
+// NewAmountInDollars set amount in US Dollars.
 func NewAmountInDollars(a int) Amount {
 	return newAmount(a, usd)
 }
 
-// NewAmountInEuros set amount to amount in Euros
+// NewAmountInEuros set amount to amount in Euros.
 func NewAmountInEuros(a int) Amount {
 	return newAmount(a, eur)
 }

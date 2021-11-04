@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-// Signature type holds keys to calculate signature
+// Signature type holds keys to calculate signature.
 type Signature struct {
 	Key, Message []byte
 	Hash         string
 	Valid        bool
 }
 
-// NewSignature return new signature
+// NewSignature return new signature.
 func NewSignature(key, hash string) *Signature {
 	return &Signature{Key: []byte(key), Hash: hash}
 }
 
-// sign calculates checksum
+// sign calculates checksum.
 func (s *Signature) sign() bool {
 	mac := hmac.New(sha256.New, s.Key)
 	mac.Write(s.Message)
@@ -33,7 +33,7 @@ func (s *Signature) sign() bool {
 	return s.Valid
 }
 
-// Verify HMAC-SHA256 signature hash used in Notify type
+// Verify HMAC-SHA256 signature hash used in Notify type.
 func (s *Signature) Verify(p Notify) bool {
 	switch p.Type {
 	case PaymentNotify:

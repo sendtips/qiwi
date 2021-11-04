@@ -25,7 +25,7 @@ func TestBadBase64Decode(t *testing.T) {
 }
 
 func TestApplePay(t *testing.T) {
-	var amount int = 500 // test amount 5.00RUB
+	amount := 500 // test amount 5.00RUB
 
 	// "paymentMethod": {
 	// 	  "type": "APPLE_PAY_TOKEN",

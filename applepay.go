@@ -16,7 +16,7 @@ type PKPaymentToken struct {
 	Signature string    `json:"signature"`
 }
 
-// APHeader internal ApplePayTokenData structure
+// APHeader internal ApplePayTokenData structure.
 type APHeader struct {
 	AppData       string `json:"applicationData,omitempty"`    // optional, HEX-string
 	Key           string `json:"wrappedKey,omitempty"`         // used only for RSA_v1
@@ -26,7 +26,7 @@ type APHeader struct {
 }
 
 // ApplePay executes payment via ApplePay
-// Pass context, amount and ApplePay token string
+// pass context, amount and ApplePay token string.
 func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err error) {
 	// Decode token from base64
 	data, err := base64.StdEncoding.DecodeString(token)

@@ -217,7 +217,7 @@ func TestHttpRequestHook(t *testing.T) {
 	}
 }
 
-// genBigBody used to emulate endless body request attack
+// genBigBody used to emulate endless body request attack.
 func genBigBody() bytes.Buffer {
 	var buf bytes.Buffer
 
