@@ -63,17 +63,17 @@ func newAmount(a int, cur currency) Amount {
 	return Amount{Value: toMoney(a), Currency: cur}
 }
 
-// NewAmountInRubles make sets rubles amount
+// NewAmountInRubles set amount in Russian Rubles
 func NewAmountInRubles(a int) Amount {
 	return newAmount(a, rub)
 }
 
-// NewAmountInDollars make sets dollars amount
+// NewAmountInDollars set amount in US Dollars
 func NewAmountInDollars(a int) Amount {
 	return newAmount(a, usd)
 }
 
-// NewAmountInEuros make sets euros amount
+// NewAmountInEuros set amount to amount in Euros
 func NewAmountInEuros(a int) Amount {
 	return newAmount(a, eur)
 }
