@@ -41,5 +41,5 @@ func (qt *Time) UnmarshalJSON(b []byte) (err error) {
 
 // MarshalJSON packs time.Time to QIWI datetime format.
 func (qt *Time) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"%s"`, qt.Format(qiwitime))), nil
+	return []byte(fmt.Sprintf(`%q`, qt.Format(qiwitime))), nil
 }
