@@ -10,10 +10,10 @@ import (
 // PKPaymentToken is ApplePay payment token structure
 // see https://developer.apple.com/library/archive/documentation/PassKit/Reference/PaymentTokenJSON/PaymentTokenJSON.html
 type PKPaymentToken struct {
-	Version   string   `json:"version"`
-	Data      string   `json:"data"`
-	Header    APHeader `json:"header"`
-	Signature string   `json:"signature"`
+	Version   string    `json:"version"`
+	Data      string    `json:"data"`
+	Header    *APHeader `json:"header"`
+	Signature string    `json:"signature"`
 }
 
 // APHeader internal ApplePayTokenData structure
@@ -35,8 +35,11 @@ func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err e
 		return fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 	}
 
+	p.PaymentMethod = &PaymentMethod{}
+	p.PaymentMethod.ApplePayToken = &PKPaymentToken{Header: &APHeader{}}
+
 	// Parse JSON data+-
-	err = json.Unmarshal(data, &p.PaymentMethod.ApplePayToken)
+	err = json.Unmarshal(data, p.PaymentMethod.ApplePayToken)
 	if err != nil {
 		return fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 	}

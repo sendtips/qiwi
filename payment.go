@@ -23,23 +23,23 @@ const (
 
 // Payment main data structure, holds requests and responses on that requests from RSP
 type Payment struct {
-	token         string        `json:"-"`                   // Authtorisation token
-	apiLink       string        `json:"-"`                   // APILink sets payment gateway domain, no trailing slash
-	PublicKey     string        `json:"-"` // Merchant identification key	String	+
-	SiteID        string        `json:"siteId,omitempty"`
-	BillID        string        `json:"billId,omitempty"`        // Unique invoice identifier in merchant's system. It must be generated on your side with any means. It could be any sequence of digits and letters. Also you might use underscore _ and dash -. If not used, for each URL opening a new invoice is created. String(200)	-
-	PaymentID     string        `json:"paymentId,omitempty"`     // Payment operation unique identifier in RSP's system
-	CamptureID    string        `json:"captureId,omitempty"`     // Capture operation unique identifier in RSP's system
-	RefundID      string        `json:"refundId,omitempty"`      // Refund operation unique identifier in RSP's system
-	Amount        Amount        `json:"amount,omitempty"`        // Amount of customer order rounded down to 2 digits (always in rubles)
-	PaymentMethod PaymentMethod `json:"paymentMethod,omitempty"` // Payment method
-	Customer      *Customer     `json:"customer,omitempty"`      // Information about the customer
-	Creation      *QIWITime     `json:"creationDateTime,omitempty"`
-	NotifyDate    *QIWITime     `json:"createddatetime,omitempty"` // Time used in Notify
-	Expiration    *QIWITime     `json:"expirationDateTime,omitempty"`
-	Comment       string        `json:"comment,omitempty"`    // Comment to the invoice
-	SuccessURL    string        `json:"successUrl,omitempty"` // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
-	PayURL        string        `json:"payUrl,omitempty"`     // Payment page on QIWI site
+	token         string         `json:"-"` // Authtorisation token
+	apiLink       string         `json:"-"` // APILink sets payment gateway domain, no trailing slash
+	PublicKey     string         `json:"-"` // Merchant identification key	String	+
+	SiteID        string         `json:"siteId,omitempty"`
+	BillID        string         `json:"billId,omitempty"`        // Unique invoice identifier in merchant's system. It must be generated on your side with any means. It could be any sequence of digits and letters. Also you might use underscore _ and dash -. If not used, for each URL opening a new invoice is created. String(200)	-
+	PaymentID     string         `json:"paymentId,omitempty"`     // Payment operation unique identifier in RSP's system
+	CamptureID    string         `json:"captureId,omitempty"`     // Capture operation unique identifier in RSP's system
+	RefundID      string         `json:"refundId,omitempty"`      // Refund operation unique identifier in RSP's system
+	Amount        Amount         `json:"amount,omitempty"`        // Amount of customer order rounded down to 2 digits (always in rubles)
+	PaymentMethod *PaymentMethod `json:"paymentMethod,omitempty"` // Payment method
+	Customer      *Customer      `json:"customer,omitempty"`      // Information about the customer
+	Creation      *QIWITime      `json:"creationDateTime,omitempty"`
+	NotifyDate    *QIWITime      `json:"createddatetime,omitempty"` // Time used in Notify
+	Expiration    *QIWITime      `json:"expirationDateTime,omitempty"`
+	Comment       string         `json:"comment,omitempty"`    // Comment to the invoice
+	SuccessURL    string         `json:"successUrl,omitempty"` // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
+	PayURL        string         `json:"payUrl,omitempty"`     // Payment page on QIWI site
 	// extras[cf1]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf2]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf3]	Extra field to add any information to invoice data	URL-encoded string
