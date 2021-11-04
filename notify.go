@@ -48,7 +48,7 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 	// Check signature
 	if sign != "" {
 		sig := NewSignature(signkey, sign)
-		if !sig.Verify(notify) {
+		if !sig.Verify(&notify) {
 			err = ErrBadSignature
 		}
 	}

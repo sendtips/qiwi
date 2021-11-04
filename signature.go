@@ -34,7 +34,7 @@ func (s *Signature) sign() bool {
 }
 
 // Verify HMAC-SHA256 signature hash used in Notify type.
-func (s *Signature) Verify(p Notify) bool {
+func (s *Signature) Verify(p *Notify) bool {
 	switch p.Type {
 	case PaymentNotify:
 		// payment.paymentId|payment.createdDateTime|payment.amount.value
