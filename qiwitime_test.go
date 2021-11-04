@@ -7,7 +7,6 @@ import (
 )
 
 func TestQIWITime(t *testing.T) {
-
 	type TimeCompare struct {
 		Time time.Time `json:"datetime"`
 	}
@@ -29,11 +28,9 @@ func TestQIWITime(t *testing.T) {
 			t.Errorf("Time parse fail %s %s", p.Time, correcttime)
 		}
 	}
-
 }
 
 func TestNowInMoscow(t *testing.T) {
-
 	d := 3 * time.Hour
 	now := time.Now().UTC().Add(d)
 
@@ -42,5 +39,4 @@ func TestNowInMoscow(t *testing.T) {
 	if moscowTime.Hour() != now.Hour() {
 		t.Error("Wrong NowInMoscow")
 	}
-
 }

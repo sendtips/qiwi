@@ -11,10 +11,10 @@ const (
 	rub currency = "RUB"
 	usd currency = "USD"
 	eur currency = "EUR"
-	//GBP Currency = "GBP"
+	// GBP Currency = "GBP"
 )
 
-// kopeeksInRuble used to make float amount value from int
+// kopeeksInRuble used to make float amount value from int.
 const kopeeksInRuble float64 = 100
 
 type money float64
@@ -40,10 +40,12 @@ func (m money) MarshalJSON() ([]byte, error) {
 
 func (m *money) UnmarshalJSON(data []byte) error {
 	const doublequotesign byte = 34 // "
+	const moneybitsize = 64         // int64
+
 	if data[0] == doublequotesign {
 		data = data[1 : len(data)-1]
 	}
-	am, err := strconv.ParseFloat(string(data), 64)
+	am, err := strconv.ParseFloat(string(data), moneybitsize)
 	if err != nil {
 		return fmt.Errorf("[QIWI] Amount JSON error: %w", ErrBadJSON)
 	}

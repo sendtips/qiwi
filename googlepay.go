@@ -33,5 +33,4 @@ func (p *Payment) GooglePay(ctx context.Context, amount int, token []byte) error
 	err = proceedRequest(ctx, "PUT", requestLink, p)
 
 	return p.checkErrors(err)
-
 }

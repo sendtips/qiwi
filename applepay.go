@@ -28,7 +28,6 @@ type APHeader struct {
 // ApplePay executes payment via ApplePay
 // Pass context, amount and ApplePay token string
 func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err error) {
-
 	// Decode token from base64
 	data, err := base64.StdEncoding.DecodeString(token)
 	if err != nil {
@@ -54,5 +53,4 @@ func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err e
 	err = proceedRequest(ctx, "PUT", requestLink, p)
 
 	return p.checkErrors(err)
-
 }

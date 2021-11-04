@@ -12,7 +12,6 @@ import (
 )
 
 func TestNotifyType(t *testing.T) {
-
 	tests := []struct {
 		input string
 		want  NotifyType
@@ -35,7 +34,6 @@ func TestNotifyType(t *testing.T) {
 }
 
 func TestHook(t *testing.T) {
-
 	const key = "TOKEN"
 
 	payload := []byte(`
@@ -95,17 +93,20 @@ func TestHook(t *testing.T) {
 		{
 			payload,
 			&Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}},
-			nil, "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f"},
+			nil, "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f",
+		},
 
 		{
 			[]byte(`{{{bad json}`),
 			&Notify{},
-			ErrBadJSON, ""},
+			ErrBadJSON, "",
+		},
 
 		{
 			payload,
 			&Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}},
-			ErrBadSignature, "BADSIGN"},
+			ErrBadSignature, "BADSIGN",
+		},
 	}
 
 	for _, test := range tests {
@@ -125,7 +126,6 @@ func TestHook(t *testing.T) {
 		}
 
 	}
-
 }
 
 func TestHttpRequestHook(t *testing.T) {

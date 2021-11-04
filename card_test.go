@@ -13,7 +13,6 @@ import (
 )
 
 func TestCardRequest(t *testing.T) {
-
 	// Expected reply from QIWI
 	// HTTP/1.1 200 OK
 	// Content-Type: application/json
@@ -80,7 +79,6 @@ func TestCardRequest(t *testing.T) {
 	// Route request to mocked http server
 	pay := New("billId", "SiteID", "TOKEN", serv.URL)
 	err := pay.CardRequest(context.TODO(), "pubKey", 100)
-
 	if err != nil {
 		t.Errorf("CardRequest error: %s", err)
 	}
@@ -93,11 +91,9 @@ func TestCardRequest(t *testing.T) {
 	if pay.PayURL != "https://oplata.qiwi.com/form/?invoice_uid=78d60ca9-7c99-481f-8e51-0100c9012087" {
 		t.Error("PayURL not received")
 	}
-
 }
 
 func TestLocationTime(t *testing.T) {
-
 	pay := New("billID", "siteID", "token", "")
 	_ = pay.CardRequest(context.TODO(), "pubKey", 100)
 
@@ -109,5 +105,4 @@ func TestLocationTime(t *testing.T) {
 	if pay.Expiration.Before(msktime) {
 		t.Error("Bad expiration time", pay.Expiration, msktime)
 	}
-
 }

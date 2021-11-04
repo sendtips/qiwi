@@ -11,9 +11,11 @@ type QIWITime struct {
 	time.Time
 }
 
-const moscowtz = "Europe/Moscow"
-const qiwidate = "2006-01-02T15:04:05"
-const qiwitime = "2006-01-02T15:04:05-07:00"
+const (
+	moscowtz = "Europe/Moscow"
+	qiwidate = "2006-01-02T15:04:05"
+	qiwitime = "2006-01-02T15:04:05-07:00"
+)
 
 // NowInMoscow returns current time in Moscow (MSK+3)
 func NowInMoscow() QIWITime {

@@ -6,7 +6,6 @@ import (
 )
 
 func TestSignature(t *testing.T) {
-
 	// headers := `
 	// POST /qiwi-notify.php HTTP/1.1
 	// Accept: application/json
@@ -251,7 +250,6 @@ func TestSignature(t *testing.T) {
 			t.Errorf("Wrong signature")
 		}
 	}
-
 }
 
 func TestBadSignature(t *testing.T) {

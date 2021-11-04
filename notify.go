@@ -70,5 +70,4 @@ func NotifyParseHTTPRequest(signkey string, w http.ResponseWriter, r *http.Reque
 	}
 
 	return NewNotify(signkey, r.Header.Get("Signature"), payload.Bytes())
-
 }

@@ -27,7 +27,6 @@ func Examplezlibzompress() {
 }
 
 func TestGooglePay(t *testing.T) {
-
 	// google_token_structure := []byte(`
 	// "paymentMethod": {
 	// 	"type": "GOOGLE_PAY_TOKEN",
@@ -196,5 +195,4 @@ func TestGooglePay(t *testing.T) {
 	if err != nil {
 		t.Errorf("GooglePay method error: %s", err)
 	}
-
 }

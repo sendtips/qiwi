@@ -67,54 +67,54 @@ type PaymentMethod struct {
 	PAN string `json:"pan,omitempty"` // optional string(19) Card string //Card number. For type=CARD only
 
 	ExpiryDate string `json:"expiryDate,omitempty"`
-	//optional
-	//string(5)
-	//Card expiry date (MM/YY). For type=CARD only
+	// optional
+	// string(5)
+	// Card expiry date (MM/YY). For type=CARD only
 
 	CVV string `json:"cvv2,omitempty"`
-	//optional
-	//string(4)
-	//Card CVV2/CVC2. For type=CARD only
+	// optional
+	// string(4)
+	// Card CVV2/CVC2. For type=CARD only
 
 	Name string `json:"holderName,omitempty"`
 	// optional
 	// string(26)
-	//Customer card holder (Latin letters). For type=CARD only
+	// Customer card holder (Latin letters). For type=CARD only
 
 	ApplePayToken *PKPaymentToken `json:"paymentData,omitempty"`
-	//optional
-	//string
-	//Payment token string. For type=TOKEN, APPLE_PAY_TOKEN, GOOGLE_PAY_TOKEN only
+	// optional
+	// string
+	// Payment token string. For type=TOKEN, APPLE_PAY_TOKEN, GOOGLE_PAY_TOKEN only
 	Token string `json:"paymentToken,omitempty"`
 
 	T3DS *T3DS `json:"external3dSec,omitempty"`
-	//optional
-	//object
-	//Payment data from Apple Pay or Google Pay.
+	// optional
+	// object
+	// Payment data from Apple Pay or Google Pay.
 
 }
 
 // T3DS 3D-Secure
 type T3DS struct {
 	Type string `json:"type"`
-	//require
-	//string
-	//Payment data type: APPLE_PAY or GOOGLE_PAY.
+	// require
+	// string
+	// Payment data type: APPLE_PAY or GOOGLE_PAY.
 
 	OnlinePaymentCrypto string `json:"onlinePaymentCryptogram,omitempty"`
-	//optional
-	//string
+	// optional
+	// string
 	// Contents of "onlinePaymentCryptogram" field from decrypted Apple payment token. For type=APPLE_PAY only.
 
 	Cryptogram string `json:"cryptogram,omitempty"`
-	//optional
-	//string
+	// optional
+	// string
 	// Contents of "cryptogram" from decrypted Google payment token. For type=GOOGLE_PAY only.
 
 	ECIIndicator string `json:"eciIndicator,omitempty"`
-	//optional
-	//string(2)
-	//ECI indicator. It should be sent if it is received in Apple (Google) payment token. Otherwise, do not send this parameter.
+	// optional
+	// string(2)
+	// ECI indicator. It should be sent if it is received in Apple (Google) payment token. Otherwise, do not send this parameter.
 }
 
 // Customer user related data
@@ -203,7 +203,6 @@ func New(billId, siteid, token, endpoint string) *Payment {
 
 // checkErrors checks if errors is presented in reply
 func (p *Payment) checkErrors(err error) error {
-
 	if err == nil {
 		if p.ErrCode != "" {
 			err = fmt.Errorf("[QIWI] RSP Response %w: %s (%s)", ErrReplyWithError, p.Description, p.ErrCode)
@@ -211,5 +210,4 @@ func (p *Payment) checkErrors(err error) error {
 	}
 
 	return err
-
 }

@@ -60,9 +60,7 @@ type CardToken struct {
 
 // CardRequest request payment session on RSP site
 func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) error {
-
 	p.PublicKey = pubKey
-	//p.PaymentMethod.Type = CardPayment
 	p.Amount = NewAmountInRubles(amount)
 	p.Expiration = NowInMoscow().Add(expirationTime)
 	p.Flags.Flags = []string{"SALE"} // one-step payment
@@ -73,5 +71,4 @@ func (p *Payment) CardRequest(ctx context.Context, pubKey string, amount int) er
 	p.BillID = ""
 
 	return proceedRequest(ctx, "PUT", requestLink, p)
-
 }
