@@ -107,7 +107,8 @@ func TestGooglePay(t *testing.T) {
 			return
 		}
 		defer data.Close()
-		_, err = io.Copy(&b, data)
+
+		_, err = io.Copy(&b, data) //nolint
 		if err != nil {
 			fmt.Fprintln(w, `{
 				  "serviceName" : "payin-core",
