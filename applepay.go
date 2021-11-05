@@ -35,7 +35,6 @@ func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err e
 		return fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 	}
 
-	// p.PaymentMethod = &PaymentMethod{}
 	p.PaymentMethod.ApplePayToken = &PKPaymentToken{Header: &APHeader{}}
 
 	// Parse JSON data+-

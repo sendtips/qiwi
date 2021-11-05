@@ -22,8 +22,6 @@ func zlibzompress(token string) []byte {
 // GooglePay method executes Google Pay payment.
 func (p *Payment) GooglePay(ctx context.Context, amount int, token string) error {
 	var err error
-
-	// p.PaymentMethod = &PaymentMethod{}
 	p.PaymentMethod.Type = GooglePayPayment
 	p.PaymentMethod.Token = base64.StdEncoding.EncodeToString(zlibzompress(token))
 	p.Amount = NewAmountInRubles(amount)
