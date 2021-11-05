@@ -118,8 +118,8 @@ type Customer struct {
 	Phone   string `json:"phone,omitempty"`
 }
 
-// Extra flags to QIWI API
-// like "flags": ["SALE"].
+// Flags holds extra flags for QIWI API
+// and produces "flags": ["SALE"].
 type Flags struct {
 	Flags []string `json:"flags,omitempty"`
 }
