@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"net/http"
 )
 
 // zlibzompress via zlib token data for googlepay.
@@ -22,15 +23,15 @@ func zlibzompress(token string) []byte {
 func (p *Payment) GooglePay(ctx context.Context, amount int, token string) error {
 	var err error
 
-	p.PaymentMethod = &PaymentMethod{}
+	// p.PaymentMethod = &PaymentMethod{}
 	p.PaymentMethod.Type = GooglePayPayment
 	p.PaymentMethod.Token = base64.StdEncoding.EncodeToString(zlibzompress(token))
 	p.Amount = NewAmountInRubles(amount)
 
 	// Make request link
-	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.SiteID, p.BillID)
+	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.siteid, p.payid)
 
-	err = proceedRequest(ctx, "PUT", requestLink, p)
+	err = proceedRequest(ctx, http.MethodPut, requestLink, p)
 
 	return p.checkErrors(err)
 }

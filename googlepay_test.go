@@ -43,7 +43,7 @@ func TestGooglePay(t *testing.T) {
 		var p Payment
 		var tk GooglePayToken
 
-		if r.Method != "PUT" {
+		if r.Method != http.MethodPut {
 			fmt.Fprintln(w, `{
 				  "serviceName" : "payin-core",
 				  "errorCode" : "validation.wrongmethod",
