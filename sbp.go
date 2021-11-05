@@ -22,14 +22,11 @@ type SBPImage struct {
 // SBP returns SBP payment session data.
 // Comment appears in bank payment.
 func (p *Payment) SBP(ctx context.Context, amount int, comment string) error {
-	p.PaymentMethod = &PaymentMethod{}
 	p.PaymentMethod.Type = SBPPayment
 	p.Amount = NewAmountInRubles(amount)
 	p.Comment = comment
 
-	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.SiteID, p.BillID)
-	p.SiteID = ""
-	p.BillID = ""
+	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.siteid, p.payid)
 
 	return proceedRequest(ctx, http.MethodPut, requestLink, p)
 }

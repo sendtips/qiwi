@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"net/http"
 )
 
 // PKPaymentToken is ApplePay payment token structure
@@ -34,7 +35,6 @@ func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err e
 		return fmt.Errorf("[QIWI] %w: %s", ErrBadJSON, err)
 	}
 
-	p.PaymentMethod = &PaymentMethod{}
 	p.PaymentMethod.ApplePayToken = &PKPaymentToken{Header: &APHeader{}}
 
 	// Parse JSON data+-
@@ -47,10 +47,10 @@ func (p *Payment) ApplePay(ctx context.Context, amount int, token string) (err e
 	p.Amount = NewAmountInRubles(amount)
 
 	// Make request link
-	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.SiteID, p.BillID)
+	requestLink := fmt.Sprintf("/payin/v1/sites/%s/payments/%s", p.siteid, p.payid)
 
 	// Send request
-	err = proceedRequest(ctx, "PUT", requestLink, p)
+	err = proceedRequest(ctx, http.MethodPut, requestLink, p)
 
 	return p.checkErrors(err)
 }

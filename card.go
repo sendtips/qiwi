@@ -3,6 +3,7 @@ package qiwi
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"net/url"
 	"time"
 )
@@ -62,12 +63,12 @@ func (p *Payment) CardRequest(ctx context.Context, amount int) error {
 	p.Expiration = NowInMoscow().Add(expirationTime)
 	p.Flags.Flags = []string{"SALE"} // one-step payment
 
-	// Make request link
-	requestLink := fmt.Sprintf("/payin/v1/sites/%s/bills/%s", p.SiteID, p.BillID)
-	p.SiteID = ""
-	p.BillID = ""
+	p.PaymentMethod = nil // need to make query
 
-	return proceedRequest(ctx, "PUT", requestLink, p)
+	// Make request link
+	requestLink := fmt.Sprintf("/payin/v1/sites/%s/bills/%s", p.siteid, p.payid)
+
+	return proceedRequest(ctx, http.MethodPut, requestLink, p)
 }
 
 // PublicLink an easy way to integrate with the QIWI payment form.

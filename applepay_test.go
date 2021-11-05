@@ -49,7 +49,7 @@ func TestApplePay(t *testing.T) {
 		var p Payment
 		var err error
 
-		if r.Method != "PUT" { // nolint
+		if r.Method != http.MethodPut {
 			fmt.Fprintln(w, `{
 				  "serviceName" : "payin-core",
 				  "errorCode" : "validation.wrongmethod",

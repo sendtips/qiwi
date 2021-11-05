@@ -27,8 +27,10 @@ const (
 type Payment struct {
 	token         string         `json:"-"` // Authtorisation token
 	apiLink       string         `json:"-"` // APILink sets payment gateway domain, no trailing slash
-	PublicKey     string         `json:"-"` // Merchant identification key	String	+
-	SiteID        string         `json:"siteId,omitempty"`
+	siteid        string         // Same as SiteID, but used for requests, as SiteID sets in responses
+	payid         string         // Same as BillID or PaymentID, but used only for requests, BillID sets in responses
+	PublicKey     string         `json:"-"`                       // Merchant identification key	String	+
+	SiteID        string         `json:"siteId,omitempty"`        // RSP site identifier
 	BillID        string         `json:"billId,omitempty"`        // Unique invoice identifier in merchant's system. It must be generated on your side with any means. It could be any sequence of digits and letters. Also you might use underscore _ and dash -. If not used, for each URL opening a new invoice is created. String(200)	-
 	PaymentID     string         `json:"paymentId,omitempty"`     // Payment operation unique identifier in RSP's system
 	CamptureID    string         `json:"captureId,omitempty"`     // Capture operation unique identifier in RSP's system
@@ -199,7 +201,7 @@ func New(billID, siteID, token, endpoint string) *Payment {
 	if endpoint == "" {
 		endpoint = apiLink
 	}
-	return &Payment{SiteID: siteID, BillID: billID, apiLink: endpoint, token: token}
+	return &Payment{siteid: siteID, payid: billID, apiLink: endpoint, token: token, PaymentMethod: &PaymentMethod{}}
 }
 
 // checkErrors checks if errors is presented in reply.
