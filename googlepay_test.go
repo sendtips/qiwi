@@ -14,7 +14,7 @@ import (
 )
 
 func Examplezlibzompress() {
-	data := []byte("Hello world")
+	data := "Hello world"
 	res := zlibzompress(data)
 	fmt.Println(res)
 	// Output: [120 156 242 72 205 201 201 87 40 207 47 202 73 1 4 0 0 255 255 24 171 4 61]
@@ -25,7 +25,8 @@ func TestGooglePay(t *testing.T) {
 		ProtoVer string `json:"protocolVersion"`
 	}
 
-	googlePayToken := []byte(`{
+	//nolint
+	googlePayToken := `{ 
 		  "protocolVersion":"ECv2",
 		  "signature":"MEQCIH6Q4OwQ0jAceFEkGF0JID6sJNXxOEi4r+mA7biRxqBQAiAondqoUpU/bdsrAOpZIsrHQS9nwiiNwOrr24RyPeHA0Q\u003d\u003d",
 		  "intermediateSigningKey":{
@@ -33,7 +34,7 @@ func TestGooglePay(t *testing.T) {
 			"signatures": ["MEYCIQCO2EIi48s8VTH+ilMEpoXLFfkxAwHjfPSCVED/QDSHmQIhALLJmrUlNAY8hDQRV/y1iKZGsWpeNmIP+z+tCQHQxP0v"]
 		  },
 		  "signedMessage":"{\"tag\":\"jpGz1F1Bcoi/fCNxI9n7Qrsw7i7KHrGtTf3NrRclt+U\\u003d\",\"ephemeralPublicKey\":\"BJatyFvFPPD21l8/uLP46Ta1hsKHndf8Z+tAgk+DEPQgYTkhHy19cF3h/bXs0tWTmZtnNm+vlVrKbRU9K8+7cZs\\u003d\",\"encryptedMessage\":\"mKOoXwi8OavZ\"}"
-		}`)
+		}`
 
 	// HTTP MOCK
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

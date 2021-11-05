@@ -9,17 +9,17 @@ import (
 )
 
 // zlibzompress via zlib token data for googlepay.
-func zlibzompress(token []byte) []byte {
+func zlibzompress(token string) []byte {
 	var b bytes.Buffer
 	w := zlib.NewWriter(&b)
-	_, _ = w.Write(token)
+	_, _ = w.Write([]byte(token))
 	w.Close()
 
 	return b.Bytes()
 }
 
 // GooglePay method executes Google Pay payment.
-func (p *Payment) GooglePay(ctx context.Context, amount int, token []byte) error {
+func (p *Payment) GooglePay(ctx context.Context, amount int, token string) error {
 	var err error
 
 	p.PaymentMethod = &PaymentMethod{}
