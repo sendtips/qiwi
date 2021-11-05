@@ -19,6 +19,8 @@ const (
 	ApplePayPayment PaymentType = "APPLE_PAY_TOKEN"
 	// GooglePayPayment GooglePay payment.
 	GooglePayPayment PaymentType = "GOOGLE_PAY_TOKEN"
+	// SBPPayment pay via SBP.
+	SBPPayment PaymentType = "SBP"
 )
 
 // Payment main data structure, holds requests and responses on that requests from RSP.
@@ -40,6 +42,7 @@ type Payment struct {
 	Comment       string         `json:"comment,omitempty"`    // Comment to the invoice
 	SuccessURL    string         `json:"successUrl,omitempty"` // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
 	PayURL        string         `json:"payUrl,omitempty"`     // Payment page on QIWI site
+	Req           *Requirements  `json:"requirements,omitempty"`
 	// extras[cf1]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf2]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf3]	Extra field to add any information to invoice data	URL-encoded string
@@ -109,6 +112,10 @@ type T3DS struct {
 	// optional
 	// string(2)
 	// ECI indicator. It should be sent if it is received in Apple (Google) payment token. Otherwise, do not send this parameter.
+}
+
+type Requirements struct {
+	SBP *SBPData `json:"sbp,omitempty"`
 }
 
 // Customer user related data.
