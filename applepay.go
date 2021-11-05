@@ -16,7 +16,7 @@ type PKPaymentToken struct {
 	Signature string    `json:"signature"`
 }
 
-// APHeader internal ApplePayTokenData structure.
+// APHeader holds Header of PKPaymentToken.
 type APHeader struct {
 	AppData       string `json:"applicationData,omitempty"`    // optional, HEX-string
 	Key           string `json:"wrappedKey,omitempty"`         // used only for RSA_v1
