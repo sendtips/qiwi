@@ -78,7 +78,7 @@ func TestCardRequest(t *testing.T) {
 
 	// Route request to mocked http server
 	pay := New("billId", "SiteID", "TOKEN", serv.URL)
-	err := pay.CardRequest(context.TODO(), "pubKey", 100)
+	err := pay.CardRequest(context.TODO(), 100)
 	if err != nil {
 		t.Errorf("CardRequest error: %s", err)
 	}
@@ -95,7 +95,7 @@ func TestCardRequest(t *testing.T) {
 
 func TestLocationTime(t *testing.T) {
 	pay := New("billID", "siteID", "token", "")
-	_ = pay.CardRequest(context.TODO(), "pubKey", 100)
+	_ = pay.CardRequest(context.TODO(), 100)
 
 	// Moscow time
 	msktz, _ := time.LoadLocation("Europe/Moscow")
@@ -104,5 +104,15 @@ func TestLocationTime(t *testing.T) {
 
 	if pay.Expiration.Before(msktime) {
 		t.Error("Bad expiration time", pay.Expiration, msktime)
+	}
+}
+
+func TestPublicLink(t *testing.T) {
+	const wantLink = `https://oplata.qiwi.com/create?publicKey=pubKey&comment=some%20comment&amount=3.01`
+
+	payLink := PublicLink("pubKey", "some comment", 301)
+
+	if payLink != wantLink {
+		t.Errorf("Wrong payment link: %s, want %s", payLink, wantLink)
 	}
 }
