@@ -93,7 +93,7 @@ func TestHook(t *testing.T) {
 		{
 			payload,
 			&Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}},
-			nil, "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f",
+			nil, "3c67f9a691e34e1a9e74e05927f3901186cc838cc81de2a3519c78b9612cf49e",
 		},
 
 		{
@@ -182,8 +182,8 @@ func TestHttpRequestHook(t *testing.T) {
 		payload          bytes.Buffer
 		err              error
 	}{
-		{"TOKEN", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f", payload, nil},
-		{"TOKEN", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f", genBigBody(), ErrBadJSON},
+		{"TOKEN", "3c67f9a691e34e1a9e74e05927f3901186cc838cc81de2a3519c78b9612cf49e", payload, nil},
+		{"TOKEN", "3c67f9a691e34e1a9e74e05927f3901186cc838cc81de2a3519c78b9612cf49e", genBigBody(), ErrBadJSON},
 	}
 
 	for _, test := range tests {

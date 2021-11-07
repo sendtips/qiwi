@@ -29,9 +29,14 @@ func (qt Time) Add(d time.Duration) *Time {
 	return &qt
 }
 
+// String Stringer interface.
+func (qt *Time) String() string {
+	return qt.Format(qiwitime)
+}
+
 // UnmarshalJSON unpacks QIWI datetime format in go time.Time.
 func (qt *Time) UnmarshalJSON(b []byte) (err error) {
-	s := string(b[1 : len(b)-1])
+	s := string(b[1 : len(b)-1]) // remove quotes "
 	qt.Time, err = time.Parse(time.RFC3339, s)
 	if err != nil {
 		qt.Time, err = time.Parse(qiwidate, s)
@@ -41,5 +46,5 @@ func (qt *Time) UnmarshalJSON(b []byte) (err error) {
 
 // MarshalJSON packs time.Time to QIWI datetime format.
 func (qt *Time) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`%q`, qt.Format(qiwitime))), nil
+	return []byte(fmt.Sprintf("%q", qt)), nil
 }

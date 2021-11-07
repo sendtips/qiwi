@@ -220,11 +220,11 @@ func TestSignature(t *testing.T) {
 		key, hash string
 		payload   []byte
 	}{
-		{"TOKEN", "426917662ee15d568a5cddc14620cee02c604364185ac3f3221ff33d1d2fa49f", payloadPayment},
-		{"TOKEN", "0b0b2140e0614ded05feefdb448fb77d29c4616591f036f2a7491e7799935eda", payloadCapture},
-		{"TOKEN", "4c445af0c065bfc531866cd21f2b93d67f62820cef74341efed506da717a4424", payloadRefund},
-		{"TOKEN", "747d49a7bb98c75249659822e3d43912225ac9a75bdddf7bc967af7439d87cfd", payloadCheckCard},
-		{"TOKEN", "0a7d5b657b61bfac18f350d57408b79fca88eb0fd6db644dc9e4c436c3f0d056", payloadBADType},
+		{"TOKEN", "3c67f9a691e34e1a9e74e05927f3901186cc838cc81de2a3519c78b9612cf49e", payloadPayment},
+		{"TOKEN", "5167b2bd0b07957e11686552ff40e3df688478f660c871f4257becdebd3acca5", payloadCapture},
+		{"TOKEN", "f3db008ae056f18d3066f0cc8b3f1725af70da8e8a0924759f57d9db6412d659", payloadRefund},
+		{"TOKEN", "43b3f5544546c5a3dcdb0a5ae35d60689578665394a0f6cbac01c78e6876f03f", payloadCheckCard},
+		{"TOKEN", "5235526ab9b4fc6dccf5762efd79359470bf4dff673fc2d2f34c907e6d41c0c5", payloadBADType},
 	}
 
 	for _, test := range tests {
