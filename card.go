@@ -59,6 +59,7 @@ type CardToken struct {
 
 // CardRequest request payment session on RSP site.
 func (p *Payment) CardRequest(ctx context.Context, amount int) error {
+	p.BillID = "" // BillID set as URL params in that type of request
 	p.Amount = NewAmountInRubles(amount)
 	p.Expiration = NowInMoscow().Add(expirationTime)
 	p.Flags.Flags = []string{"SALE"} // one-step payment

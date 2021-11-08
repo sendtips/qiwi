@@ -201,7 +201,7 @@ func New(billID, siteID, token, endpoint string) *Payment {
 	if endpoint == "" {
 		endpoint = apiLink
 	}
-	return &Payment{siteid: siteID, payid: billID, apiLink: endpoint, token: token, PaymentMethod: &PaymentMethod{}}
+	return &Payment{siteid: siteID, payid: billID, BillID: billID, apiLink: endpoint, token: token, PaymentMethod: &PaymentMethod{}}
 }
 
 // checkErrors checks if errors is presented in reply.
