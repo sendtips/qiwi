@@ -181,7 +181,7 @@ type Status struct {
 	Reason       StatusError `json:"reason,omitempty"`
 	ReasonNotify StatusError `json:"reasonCode,omitempty"`
 	Message      string      `json:"reasonMessage,omitempty"`
-	ErrCode      string      `jsob:"errorCode,omitempty"`
+	ErrCode      string      `json:"errorCode,omitempty"`
 }
 
 // Error holds error reply from a carrier.
