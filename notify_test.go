@@ -184,6 +184,7 @@ func TestHttpRequestHook(t *testing.T) {
 	}{
 		{"TOKEN", "3c67f9a691e34e1a9e74e05927f3901186cc838cc81de2a3519c78b9612cf49e", payload, nil},
 		{"TOKEN", "3c67f9a691e34e1a9e74e05927f3901186cc838cc81de2a3519c78b9612cf49e", genBigBody(), ErrBadJSON},
+		{"TOKEN", "", payload, ErrBadSignature},
 	}
 
 	for _, test := range tests {
