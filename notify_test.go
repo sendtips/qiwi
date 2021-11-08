@@ -86,25 +86,25 @@ func TestHook(t *testing.T) {
 
 	tests := []struct {
 		payload []byte
-		want    *Notify
+		want    Notify
 		err     error
 		sig     string
 	}{
 		{
 			payload,
-			&Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}},
+			Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}},
 			nil, "3c67f9a691e34e1a9e74e05927f3901186cc838cc81de2a3519c78b9612cf49e",
 		},
 
 		{
 			[]byte(`{{{bad json}`),
-			&Notify{},
+			Notify{},
 			ErrBadJSON, "",
 		},
 
 		{
 			payload,
-			&Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}},
+			Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(221124)}},
 			ErrBadSignature, "BADSIGN",
 		},
 	}

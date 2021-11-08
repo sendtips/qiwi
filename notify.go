@@ -36,8 +36,8 @@ type Notify struct {
 }
 
 // NewNotify returns Notify data from bytes.
-func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
-	var notify Notify
+func NewNotify(signkey, sign string, payload []byte) (*Notify, error) {
+	notify := &Notify{}
 	var err error
 
 	err = json.Unmarshal(payload, &notify)
@@ -46,7 +46,7 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 	}
 
 	// Check signature
-	if !NewSignature(signkey, sign).Verify(&notify) {
+	if !NewSignature(signkey, sign).Verify(notify) {
 		err = ErrBadSignature
 	}
 
@@ -56,14 +56,14 @@ func NewNotify(signkey, sign string, payload []byte) (Notify, error) {
 // NotifyParseHTTPRequest parses http request which returns Notify
 // and also protects against a malicious client streaming
 // an endless request body.
-func NotifyParseHTTPRequest(signkey string, w http.ResponseWriter, r *http.Request) (Notify, error) {
+func NotifyParseHTTPRequest(signkey string, w http.ResponseWriter, r *http.Request) (*Notify, error) {
 	var payload bytes.Buffer
 
 	r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
 
 	_, err := io.Copy(&payload, r.Body)
 	if err != nil {
-		return Notify{}, fmt.Errorf("[QIWI] Notify payload http parser: %w: %s", ErrBadJSON, err)
+		return &Notify{}, fmt.Errorf("[QIWI] Notify payload http parser: %w: %s", ErrBadJSON, err)
 	}
 
 	return NewNotify(signkey, r.Header.Get("Signature"), payload.Bytes())
