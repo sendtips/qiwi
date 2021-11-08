@@ -50,8 +50,8 @@ type Payment struct {
 	// extras[cf3]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf4]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf5]	Extra field to add any information to invoice data	URL-encoded string
-	Flags
-	Reply
+	Flags  []string `json:"flags,omitempty"`
+	Status *Status  `json:"status,omitempty"`
 
 	Error
 }
@@ -129,14 +129,14 @@ type Customer struct {
 
 // Flags holds extra flags for QIWI API
 // and produces "flags": ["SALE"].
-type Flags struct {
-	Flags []string `json:"flags,omitempty"`
-}
-
-// Reply from RSP.
-type Reply struct {
-	Status *Status `json:"status,omitempty"`
-}
+// type Flags struct {
+//
+// }
+//
+// // Reply from RSP.
+// type Reply struct {
+//
+// }
 
 // StatusCode operation status reflects its current state.
 type StatusCode string
@@ -148,6 +148,15 @@ const (
 	StatusOK        StatusCode = "SUCCESS"   // Request for authentication is successfully processed Notifications
 	StatusFail      StatusCode = "DECLINE"   // Request for payment confirmation is rejected Notifications, API responses
 )
+
+func (sc *StatusCode) UnmarshalJSON(b []byte) (err error) {
+	s := string(b[1 : len(b)-1])
+	if s == "DECLINED" || s == "" { // There are two responses from QIWI API
+		s = "DECLINE" // with the same meaning DECLINE and DECLINED.
+	}
+	*sc = StatusCode(s)
+	return err
+}
 
 // StatusError API errors describe a reason for rejection of the operation.
 type StatusError string
@@ -208,8 +217,14 @@ func New(billID, siteID, token, endpoint string) *Payment {
 func (p *Payment) checkErrors(err error) error {
 	if err == nil {
 		if p.ErrCode != "" {
-			err = fmt.Errorf("[QIWI] RSP Response %w: %s (%s)", ErrReplyWithError, p.Description, p.ErrCode)
+			err = fmt.Errorf("[QIWI] Error in response %w: %s (%s)", ErrReplyWithError, p.Description, p.ErrCode)
+		} else if p.Status != nil {
+			if p.Status.Reason != "" {
+				err = fmt.Errorf("[QIWI] Error in response %w: %s (%s)", ErrReplyWithError, p.Status.Value, p.Status.Reason)
+			}
 		}
+		// Note, there are no checks for Notify type business-logic errors
+		// you must handle it on your own.
 	}
 
 	return err
