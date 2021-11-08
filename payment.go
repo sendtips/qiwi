@@ -127,17 +127,6 @@ type Customer struct {
 	Phone   string `json:"phone,omitempty"`
 }
 
-// Flags holds extra flags for QIWI API
-// and produces "flags": ["SALE"].
-// type Flags struct {
-//
-// }
-//
-// // Reply from RSP.
-// type Reply struct {
-//
-// }
-
 // StatusCode operation status reflects its current state.
 type StatusCode string
 
