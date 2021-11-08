@@ -56,7 +56,7 @@ func TestCardRequest(t *testing.T) {
 
 			_ = json.Unmarshal(buf.Bytes(), &payload)
 			isSale := false
-			for _, flag := range payload.Flags.Flags {
+			for _, flag := range payload.Flags {
 				if flag == "SALE" {
 					isSale = true
 					break
