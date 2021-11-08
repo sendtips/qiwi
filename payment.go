@@ -203,6 +203,8 @@ func New(billID, siteID, token, endpoint string) *Payment {
 }
 
 // checkErrors checks if errors is presented in reply.
+// Note, there are no checks for Notify type business-logic errors
+// you must handle it on your own.
 func (p *Payment) checkErrors(err error) error {
 	if err == nil {
 		if p.ErrCode != "" {
@@ -212,8 +214,6 @@ func (p *Payment) checkErrors(err error) error {
 				err = fmt.Errorf("[QIWI] Error in response %w: %s (%s)", ErrReplyWithError, p.Status.Value, p.Status.Reason)
 			}
 		}
-		// Note, there are no checks for Notify type business-logic errors
-		// you must handle it on your own.
 	}
 
 	return err
