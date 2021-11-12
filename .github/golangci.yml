@@ -18,20 +18,23 @@ linters:
     - godox
     - goerr113
     - goheader
+    - golint
     - gomoddirectives
     - gomodguard
     - goprintffuncname
     - ifshort
+    - interfacer
     - lll
     - maligned
     - nlreturn
     - paralleltest
+    - scopelint
     - tagliatelle
-    # - tenv
+    - tenv
     - testpackage
     - thelper
     - tparallel
-    # - varnamelen
+    - varnamelen
     - whitespace
     - wrapcheck
     - wsl
@@ -48,7 +51,7 @@ linters:
     - varcheck
     - asciicheck
     - bodyclose
-    # - contextcheck
+    - contextcheck
     - durationcheck
     - exhaustive
     - exportloopref
@@ -59,11 +62,9 @@ linters:
     - gofmt
     - gofumpt
     - goimports
-    # - golint
     - gomnd
     - gosec
     - importas
-    # - interfacer
     - makezero
     - misspell
     - nakedret
@@ -76,7 +77,6 @@ linters:
     - promlinter
     - revive
     - rowserrcheck
-    # - scopelint
     - sqlclosecheck
     - stylecheck
     - unconvert
