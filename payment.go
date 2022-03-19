@@ -64,6 +64,7 @@ type PaymentMethod struct {
 	// "TOKEN" — card payment token
 	// "APPLE_PAY_TOKEN" — encrypted Apple Pay payment token
 	// "GOOGLE_PAY_TOKEN" — encrypted Google Pay payment token
+
 	PAN string `json:"pan,omitempty"` // optional string(19) Card string //Card number. For type=CARD only
 
 	ExpiryDate string `json:"expiryDate,omitempty"`
@@ -91,7 +92,6 @@ type PaymentMethod struct {
 	// optional
 	// object
 	// Payment data from Apple Pay or Google Pay.
-
 }
 
 // T3DS 3D-Secure.
