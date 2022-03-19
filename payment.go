@@ -41,9 +41,10 @@ type Payment struct {
 	Creation      *Time          `json:"creationDateTime,omitempty"`
 	NotifyDate    *Time          `json:"createddatetime,omitempty"` // Time used in Notify
 	Expiration    *Time          `json:"expirationDateTime,omitempty"`
-	Comment       string         `json:"comment,omitempty"`    // Comment to the invoice
-	SuccessURL    string         `json:"successUrl,omitempty"` // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
-	PayURL        string         `json:"payUrl,omitempty"`     // Payment page on QIWI site
+	Comment       string         `json:"comment,omitempty"`     // Comment to the invoice
+	CallbackURL   string         `json:"callbackUrl,omitempty"` // Callback URL used to receive notification
+	SuccessURL    string         `json:"successUrl,omitempty"`  // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
+	PayURL        string         `json:"payUrl,omitempty"`      // Payment page on QIWI site
 	Req           *Requirements  `json:"requirements,omitempty"`
 	// extras[cf1]	Extra field to add any information to invoice data	URL-encoded string
 	// extras[cf2]	Extra field to add any information to invoice data	URL-encoded string
