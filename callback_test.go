@@ -9,7 +9,7 @@ func TestAddCallbackURLToBill(t *testing.T) {
 
 	pay := New("billId", "SiteID", "TOKEN", "")
 
-	if pay.CustomField.CallbackURL != "" {
+	if pay.CustomField != nil {
 		t.Error("CallbackURL set by default at Bill step")
 	}
 

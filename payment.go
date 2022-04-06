@@ -46,7 +46,7 @@ type Payment struct {
 	SuccessURL    string         `json:"successUrl,omitempty"`  // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
 	PayURL        string         `json:"payUrl,omitempty"`      // Payment page on QIWI site
 	Req           *Requirements  `json:"requirements,omitempty"`
-	CustomField   CustomField    `json:"customFields,omitempty"`
+	CustomField   *CustomField   `json:"customFields,omitempty"`
 	Flags         []string       `json:"flags,omitempty"`
 	Status        *Status        `json:"status,omitempty"`
 
