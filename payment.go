@@ -46,13 +46,9 @@ type Payment struct {
 	SuccessURL    string         `json:"successUrl,omitempty"`  // URL for redirect from the QIWI form in case of successful payment. URL should be within the merchant's site.
 	PayURL        string         `json:"payUrl,omitempty"`      // Payment page on QIWI site
 	Req           *Requirements  `json:"requirements,omitempty"`
-	// extras[cf1]	Extra field to add any information to invoice data	URL-encoded string
-	// extras[cf2]	Extra field to add any information to invoice data	URL-encoded string
-	// extras[cf3]	Extra field to add any information to invoice data	URL-encoded string
-	// extras[cf4]	Extra field to add any information to invoice data	URL-encoded string
-	// extras[cf5]	Extra field to add any information to invoice data	URL-encoded string
-	Flags  []string `json:"flags,omitempty"`
-	Status *Status  `json:"status,omitempty"`
+	CustomField   CustomField    `json:"customFields,omitempty"`
+	Flags         []string       `json:"flags,omitempty"`
+	Status        *Status        `json:"status,omitempty"`
 
 	Error
 }
@@ -115,6 +111,12 @@ type T3DS struct {
 	// optional
 	// string(2)
 	// ECI indicator. It should be sent if it is received in Apple (Google) payment token. Otherwise, do not send this parameter.
+}
+
+// CustomField in this API used only
+// to set callback url.
+type CustomField struct {
+	CallbackURL string `json:"invoice_callback_url,omitempty"`
 }
 
 type Requirements struct {
