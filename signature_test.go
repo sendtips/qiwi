@@ -238,7 +238,7 @@ func TestSignature(t *testing.T) {
 		}
 
 		if !sig.Verify(&notify) {
-			t.Errorf("Wrong signature")
+			t.Errorf("Wrong signature for key %s sig is not %s", test.key, test.hash)
 		}
 	}
 }

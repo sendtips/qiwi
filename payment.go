@@ -49,6 +49,7 @@ type Payment struct {
 	CustomField   *CustomField   `json:"customFields,omitempty"`
 	Flags         []string       `json:"flags,omitempty"`
 	Status        *Status        `json:"status,omitempty"`
+	Splits        []*Split        `json:"splits,omitempty"` // https://developer.qiwi.com/en/payments/#payments_split
 
 	Error
 }

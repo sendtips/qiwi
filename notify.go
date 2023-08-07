@@ -40,7 +40,7 @@ func NewNotify(signkey, sign string, payload []byte) (*Notify, error) {
 	notify := &Notify{}
 	var err error
 
-	err = json.Unmarshal(payload, notify)
+	err = json.Unmarshal(payload, &notify)
 	if err != nil {
 		return notify, fmt.Errorf("[QIWI] Notify: %w (%s)", ErrBadJSON, err)
 	}

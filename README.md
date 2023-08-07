@@ -40,7 +40,7 @@ func main() {
 
     err := pay.CardRequest(context.TODO(), 300) // Request session for 3.00RUB
     if err != nil {
-        fmt.Printf("Error occurred: %s", err)
+        fmt.Errorf("Error occurred: %s", err)
     }
 
     fmt.Printf("Pay via link: %s", pay.PayURL) // Payment session URL on QIWI website
