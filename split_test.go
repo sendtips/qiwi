@@ -55,6 +55,47 @@ func OffTestSplits(t *testing.T) {
         }
     `)
 
+	goodReply := `{
+            "billId": "eqwptt",
+            "invoiceUid": "44b2ef2a-edc6-4aed-87d3-01cf37ed2732",
+            "amount": {
+                "currency": "RUB",
+                "value": "3.00"
+            },
+            "expirationDateTime": "2021-12-31T23:59:59+03:00",
+            "status": {
+                "value": "CREATED",
+                "changedDateTime": "2021-02-05T10:21:17+03:00"
+            },
+            "comment": "Мой комментарий",
+            "flags": [
+                "TEST"
+            ],
+            "payUrl": "https://oplata.qiwi.com/form?invoiceUid=44b2ef2a-edc6-4aed-87d3-01cf37ed2732",
+            "splits": [
+                {
+                    "type": "MERCHANT_DETAILS",
+                    "siteUid": "Obuc-00",
+                    "splitAmount": {
+                        "currency": "RUB",
+                        "value": "2.00"
+                    },
+                    "orderId": "dressesforwhite",
+                    "comment": "Платье"
+                },
+                {
+                    "type": "MERCHANT_DETAILS",
+                    "siteUid": "Obuc-01",
+                    "splitAmount": {
+                        "currency": "RUB",
+                        "value": "1.00"
+                    },
+                    "orderId": "shoesforvalya",
+                    "comment": "Туфли"
+                }
+            ]
+        }`
+
 	// HTTP MOCK
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var buf bytes.Buffer
@@ -102,15 +143,27 @@ func OffTestSplits(t *testing.T) {
 			return
 		}
 
-		fmt.Fprintln(w, "{}")
+		fmt.Fprintln(w, goodReply)
 	}))
 	serv.Start()
 	defer serv.Close()
 
-	split := New("eqwptt", "SITEID", "TOKEN", serv.URL).AddSplit(NewSplit("MERCHID", NewAmountInRubles(2)))
-	split = split.AddSplit(NewSplit("ANOTHERMERCHID", NewAmountInRubles(1)))
+	split := New("eqwptt", "SITEID", "TOKEN", serv.URL).Split(NewAmountInRubles(2), "MERCHID")
+	split = split.Split(NewAmountInRubles(1), "ANOTHERMERCHID")
 	err := split.CardRequest(context.TODO(), 300)
 	if err != nil {
 		t.Errorf("Splits method error: %s", err)
+	}
+
+	if len(split.Splits) != 2 {
+		t.Error("Wrong number of splits")
+	}
+
+	if split.Splits[0].SiteUID != "Obuc-00" {
+		t.Error("Wrong split site UID")
+	}
+
+	if split.Splits[0].Amount.Value != 2.00 {
+		t.Error("Wrong split amount")
 	}
 }
