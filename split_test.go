@@ -3,9 +3,7 @@ package qiwi
 import (
 	"bytes"
 	"context"
-	// "encoding/base64"
 	"encoding/json"
-	// "errors"
 	"fmt"
 	"io"
 	"net/http"

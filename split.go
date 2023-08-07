@@ -12,14 +12,14 @@ type Split struct {
 	Comment string        `json:"comment,omitempty"` // string comment	String	Comment for the order (optional)
 }
 
-// NewSplit without optional fields, see NewSplitExtra
-func NewSplit(merchid string, a Amount) Split {
+// NewSplit without optional fields, see NewSplitExtra.
+func NewSplit(merchid string, a Amount) *Split {
 	return NewSplitExtra(merchid, a, "", "")
 }
 
-// NewSplitExtra extends to optional fields
-func NewSplitExtra(merchid string, a Amount, orderid, c string) Split {
-	s := Split{Type: MerchantDetails, SiteUID: merchid, Amount: a}
+// NewSplitExtra extends to optional fields.
+func NewSplitExtra(merchid string, a Amount, orderid, c string) *Split {
+	s := &Split{Type: MerchantDetails, SiteUID: merchid, Amount: a}
 
 	if orderid != "" {
 		s.OrderID = orderid
@@ -32,8 +32,8 @@ func NewSplitExtra(merchid string, a Amount, orderid, c string) Split {
 	return s
 }
 
-// AddSplit adds split data to payment information
-func (p *Payment) AddSplit(s Split) *Payment {
-	p.Splits = append(p.Splits, &s)
+// AddSplit adds split data to payment information.
+func (p *Payment) AddSplit(s *Split) *Payment {
+	p.Splits = append(p.Splits, s)
 	return p
 }
