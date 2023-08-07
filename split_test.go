@@ -168,12 +168,12 @@ func TestSplits(t *testing.T) {
 	if split.Splits[0].Amount.Value != 2.00 {
 		t.Error("Wrong split amount")
 	}
-    
-    if split.Splits[1].Comment != "Some purchase 2" {
-        t.Error("Wrong split amount")
-    }
-    
-    if split.Splits[1].OrderID != "shoesforvalya" {
-        t.Error("Wrong split amount")
-    }
+
+	if split.Splits[1].Comment != "Туфли" {
+		t.Error("Wrong split comment")
+	}
+
+	if split.Splits[1].OrderID != "shoesforvalya" {
+		t.Error("Wrong split orderid")
+	}
 }
