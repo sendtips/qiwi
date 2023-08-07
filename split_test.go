@@ -150,7 +150,7 @@ func TestSplits(t *testing.T) {
 
 	split := New("eqwptt", "SITEID", "TOKEN", serv.URL).
 		Split(NewAmountInRubles(200), "Obuc-00").
-		Split(NewAmountInRubles(100), "Obuc-01")
+		SplitExtra(NewAmountInRubles(100), "Obuc-01", "shoesforvalya", "Some purchase 2")
 
 	err := split.CardRequest(context.TODO(), 300)
 	if err != nil {
@@ -168,4 +168,12 @@ func TestSplits(t *testing.T) {
 	if split.Splits[0].Amount.Value != 2.00 {
 		t.Error("Wrong split amount")
 	}
+    
+    if split.Splits[1].Comment != "Some purchase 2" {
+        t.Error("Wrong split amount")
+    }
+    
+    if split.Splits[1].OrderID != "shoesforvalya" {
+        t.Error("Wrong split amount")
+    }
 }
