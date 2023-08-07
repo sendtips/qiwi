@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-func OffTestSplits(t *testing.T) {
+func TestSplits(t *testing.T) {
 	payload := []byte(`
         {
             "billId": "eqwptt",
@@ -99,7 +99,7 @@ func OffTestSplits(t *testing.T) {
 	// HTTP MOCK
 	serv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var buf bytes.Buffer
-		var pl *Payment
+		pl := &Payment{}
 		var err error
 
 		_, err = io.Copy(&buf, r.Body)
@@ -148,8 +148,10 @@ func OffTestSplits(t *testing.T) {
 	serv.Start()
 	defer serv.Close()
 
-	split := New("eqwptt", "SITEID", "TOKEN", serv.URL).Split(NewAmountInRubles(2), "MERCHID")
-	split = split.Split(NewAmountInRubles(1), "ANOTHERMERCHID")
+	split := New("eqwptt", "SITEID", "TOKEN", serv.URL).
+		Split(NewAmountInRubles(200), "Obuc-00").
+		Split(NewAmountInRubles(100), "Obuc-01")
+
 	err := split.CardRequest(context.TODO(), 300)
 	if err != nil {
 		t.Errorf("Splits method error: %s", err)
