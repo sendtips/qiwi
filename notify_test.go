@@ -188,8 +188,8 @@ func TestHook(t *testing.T) {
 
 		{
 			payloadSplits,
-			Notify{Type: PaymentNotify, Payment: Payment{Amount: NewAmountInRubles(300)}},
-			nil, "535c7ad31311be16b3e621be042d52c62d08dadf36c5631501192e903d5956e8",
+			Notify{Type: RefundNotify, Refund: Payment{Amount: NewAmountInRubles(300)}},
+			nil, "681d7b40abafb5dcf958f653887303bd081839fa963bad6149055e90a2b02b16",
 		},
 	}
 
@@ -206,7 +206,7 @@ func TestHook(t *testing.T) {
 		}
 
 		if notify.Payment.Amount.Value != test.want.Payment.Amount.Value {
-			t.Error("Amount is wrong")
+			t.Error("Amount is wrong", notify.Payment.Amount.Value, test.want.Payment.Amount.Value)
 		}
 
 	}

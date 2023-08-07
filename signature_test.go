@@ -223,7 +223,7 @@ func TestSignature(t *testing.T) {
 		{"TOKEN", "3c67f9a691e34e1a9e74e05927f3901186cc838cc81de2a3519c78b9612cf49e", payloadPayment},
 		{"TOKEN", "5167b2bd0b07957e11686552ff40e3df688478f660c871f4257becdebd3acca5", payloadCapture},
 		{"TOKEN", "f3db008ae056f18d3066f0cc8b3f1725af70da8e8a0924759f57d9db6412d659", payloadRefund},
-		{"TOKEN", "43b3f5544546c5a3dcdb0a5ae35d60689578665394a0f6cbac01c78e6876f03f", payloadCheckCard},
+		{"TOKEN", "535c7ad31311be16b3e621be042d52c62d08dadf36c5631501192e903d5956e8", payloadCheckCard},
 		{"TOKEN", "5235526ab9b4fc6dccf5762efd79359470bf4dff673fc2d2f34c907e6d41c0c5", payloadBADType},
 	}
 
