@@ -29,7 +29,7 @@ To obtain a payment session on QIWI website you need to create a new qiwi object
 package main
 
 import (
-    "fmt"
+    "log"
     "context"
     
     "github.com/sendtips/qiwi"
@@ -40,10 +40,10 @@ func main() {
 
     err := pay.CardRequest(context.TODO(), 300) // Request session for 3.00RUB
     if err != nil {
-        fmt.Printf("Error occurred: %s", err)
+        log.Fatalf("Error occurred: %s", err)
     }
 
-    fmt.Printf("Pay via link: %s", pay.PayURL) // Payment session URL on QIWI website
+    log.Printf("Pay via link: %s", pay.PayURL) // Payment session URL on QIWI website
 }
 ```
 

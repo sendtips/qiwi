@@ -1,0 +1,33 @@
+name: "Govuln"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master ]
+  schedule:
+    - cron: '42 12 * * 2'
+
+jobs:
+  analyze:
+    name: Vuln check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 'stable'
+        id: go
+
+      - name: Scan for Vulnerabilities in Code
+        uses: golang/govulncheck-action@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+          vulncheck-version: latest
+          package: ./...
+          fail-on-vuln: true

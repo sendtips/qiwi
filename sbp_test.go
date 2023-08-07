@@ -29,7 +29,7 @@ func TestSBP(t *testing.T) {
 		var buf bytes.Buffer
 		var p Payment
 
-		_, err = io.Copy(&buf, r.Body) // nolint
+		_, err = io.Copy(&buf, r.Body) //nolint
 		if err != nil {
 			fmt.Fprintf(w, errResp, err)
 		}
