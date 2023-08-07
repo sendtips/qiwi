@@ -82,7 +82,7 @@ func OffTestSplits(t *testing.T) {
                   "serviceName" : "payin-core",
                   "errorCode" : "validation.json",
                   "description" : "`+err.Error()+`",
-                  "userMessage" : "Validation error",
+                  "userMessage" : "Unmarshaling error",
                   "dateTime" : "2018-11-13T16:49:59.166+03:00",
                   "traceId" : "fd0e2a08c63ace83"
                 }`)
