@@ -36,7 +36,7 @@ func init() {
 // newRequest creates new http request to RSP.
 func newRequest(ctx context.Context, method, link, apiToken string, payload []byte) (*http.Request, error) {
 	req, err := http.NewRequestWithContext(ctx, method, link, bytes.NewBuffer(payload))
-	req.Header.Set("User-Agent", userAgent+"/"+Version)
+	req.Header.Set("User-Agent", version())
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+apiToken)
