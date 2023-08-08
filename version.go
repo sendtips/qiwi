@@ -13,10 +13,10 @@ const (
 
 func version() (s string) {
 	s = fmt.Sprintf("%s/%s", userAgent, Version)
-	
+
 	if AppVersion != "" {
 		s = fmt.Sprintf("%s (%s)", AppVersion, s)
 	}
-	
+
 	return s
 }
