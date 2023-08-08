@@ -2,7 +2,7 @@ package qiwi
 
 import "fmt"
 
-// AppVersion for version string of main application version
+// AppVersion sets version for main application.
 var AppVersion string
 
 const (
