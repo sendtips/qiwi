@@ -211,7 +211,7 @@ func TestHook(t *testing.T) {
 
 		if notify.Type == RefundNotify {
 			if notify.Refund.RefundSplits[1].Commission.Amount.Value != 0.02 {
-				t.Error("Split refuns amount is wrong")
+				t.Error("Split refunds amount is wrong")
 			}
 		}
 
