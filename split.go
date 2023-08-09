@@ -12,7 +12,7 @@ type Split struct {
 	Comment string        `json:"comment,omitempty"` // string comment	String	Comment for the order (optional)
 }
 
-// AddSplit without optional fields, see SplitExtra.
+// Split without optional fields, see SplitExtra.
 func (p *Payment) Split(a Amount, merchid string) *Payment {
 	return p.SplitExtra(a, merchid, "", "")
 }
